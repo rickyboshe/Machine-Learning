@@ -145,9 +145,9 @@ Schools in the Bronx are averaging lower SAT scores as compared to schools in Ma
 <br><br>
 
 <center>
-
 ![Socio-economic profile of NYC Boroughs](images/Profile.png)
 </center>
+
 <br><br>
 
 ###  **Trend of NYC school performance with racial diversity of schools**
