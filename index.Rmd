@@ -1,0 +1,53 @@
+---
+title: "Fredrick Boshe"
+output: html_document
+---
+
+<style type="text/css">
+.title {
+  display: none;
+}
+
+#getting-started img {
+  margin-right: 10px;
+}
+
+</style>
+
+<div class="row" style="padding-top: 30px;">
+<div class="col-sm-6">
+
+# **Profile**
+
+![](images/Fredrick.png)
+
+Academic backgrounds in Environmental Engineering (undergrad) and Economics and Policy analysis (graduate). 
+Over 2 years working experience in **performance and growth marketing** and an additional 2 years in **customer success operations**.
+<br><br>
+Having worked with data in both roles and in academia, i would like to share some personal data and insight projects here. I believe data is as useful as the insights extracted from it. This portfolio contains recent data projects and content i have worked on and published. 
+
+
+
+## Areas of Interest
+
+1. Data for sustainable development. Econometric analysis (including regression and correlation analysis) for environment, energy, agriculture and natural resource management. E.g. Women's Empowerment in Agriculture under Climate Variability Index
+
+2. Consumer behavior and insights. Clustering and tracking trends/patterns using consumer data to improve decision-making. E.g. [ESG index and visualization for consumer products](https://sustainabilityx.co/how-millennial-consumers-can-help-make-the-world-a-better-place-9e4b30ffde52)
+
+3. Personal passion projects at the intersection of circular economy, digital transformation & economy, sport & fitness. E.g. What my Fitbit say about my last 6 months under lockdown
+<br><br>
+
+
+##### [View my LinkedIn](https://www.linkedin.com/in/fredrick-boshe/)
+##### [View my Github](https://github.com/rickyboshe)
+
+
+</div>
+<div class="row" style="padding-top: 60px;">
+<div class="col-sm-6">
+
+
+
+![](images/Globe.png) [![](images/Scatter.png)](https://rickyboshe.github.io/NYC-Schools/) [![](images/ESG.PNG)](https://sustainabilityx.co/how-millennial-consumers-can-help-make-the-world-a-better-place-9e4b30ffde52)
+</a>
+</div>
