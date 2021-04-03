@@ -217,7 +217,7 @@ fig2<-combined_race_longer%>%ggplot(aes(x=percent, y=avg_sat_score, color=race))
 <center>
 ![](images/Scatter.png)
 </center>
-
+<br><br>
 
 Schools with a higher proportion of Black and Hispanic have lower SAT scores as compared to schools with a higher share of White and Asian students.This could be due to the location, programs and resources at the disposal of schools. 
 
