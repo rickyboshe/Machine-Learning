@@ -296,8 +296,9 @@ fig5<-survey_score_longer%>%ggplot(aes(x=respondent, y=avg_score, fill=responden
   theme(plot.title = element_text(hjust = 0.5))
 fig5
 ```
-
+<center>
 <img src="NYC-Guided-project_files/figure-gfm/rating-1.png" style="display: block; margin: auto;" />
+</center>
 
 <br><br> Overall, parents seem to rate NYC schools the highest while
 students (not surprisingly 😄) are rating the schools lowest. Teachers
