@@ -16,6 +16,8 @@ Questions looking to be answered are:
 3.  Do the survey respondents have similar perceptions regarding the
     quality of NYC schools?
 
+My full anyalysis is [here](NYC-Schools-main/NYC Guided project.Rmd)
+
 The survey data can be found
 [here](https://data.cityofnewyork.us/Education/2011-NYC-School-Survey/mnz3-dyi8)
 while the performance and demographics data can be found
