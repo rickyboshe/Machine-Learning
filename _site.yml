@@ -2,10 +2,6 @@ name: "Fredrick Boshe"
 navbar:
   title: "Fredrick Boshe"
   left:
-    - text: "Home"
-      href: index.html
     - text: "Projects"
-      href: Journal.html
-    - text: "Blogs"
-      href: Links.html
+      href: index.html
 output_dir: "docs"

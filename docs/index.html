@@ -11,9 +11,9 @@
 
 
 
-<title>Fredrick Boshe</title>
+<title>index.utf8</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -31,6 +31,13 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -241,13 +248,7 @@ $(document).ready(function () {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">Home</a>
-</li>
-<li>
-  <a href="Journal.html">Projects</a>
-</li>
-<li>
-  <a href="Links.html">Blogs</a>
+  <a href="index.html">Projects</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -261,38 +262,266 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Fredrick Boshe</h1>
 
 </div>
 
 
-<style type="text/css">
-.title {
-  display: none;
-}
-
-#getting-started img {
-  margin-right: 10px;
-}
-
-</style>
-<div class="row" style="padding-top: 30px;">
-<div class="col-sm-6">
-<h1 id="profile"><strong>Profile</strong></h1>
-<p><img src="images/Fredrick.png" /></p>
-<p>Academic backgrounds in Environmental Engineering (undergrad) and Economics and Policy analysis (graduate). Over 2 years working experience in <strong>performance and growth marketing</strong> and an additional 2 years in <strong>customer success operations</strong>. <br><br> Having worked with data in both roles and in academia, i would like to share some personal data and insight projects here. I believe data is as useful as the insights extracted from it. This portfolio contains recent data projects and content i have worked on and published.</p>
-<h2 id="areas-of-interest">Areas of Interest</h2>
+<div id="an-analysis-of-a-surveyed-perception-of-new-york-city-school-quality" class="section level1">
+<h1>An analysis of a surveyed perception of New York City school quality</h1>
+<p>This project looks into the perceptions of students, teachers and parents on the quality of New York City schools.</p>
+<p>Questions looking to be answered are:</p>
 <ol style="list-style-type: decimal">
-<li><p>Data for sustainable development. Econometric analysis (including regression and correlation analysis) for environment, energy, agriculture and natural resource management. E.g. Women’s Empowerment in Agriculture under Climate Variability Index</p></li>
-<li><p>Consumer behavior and insights. Clustering and tracking trends/patterns using consumer data to improve decision-making. E.g. <a href="https://sustainabilityx.co/how-millennial-consumers-can-help-make-the-world-a-better-place-9e4b30ffde52">ESG index and visualization for consumer products</a></p></li>
-<li><p>Personal passion projects at the intersection of circular economy, digital transformation &amp; economy, sport &amp; fitness. E.g. What my Fitbit say about my last 6 months under lockdown <br><br></p></li>
+<li>What is the relationship between demography and school performance?</li>
+<li>Are the perceptions related to/influenced by the demographics and success metrics of the school?</li>
+<li>Do the survey respondents have similar perceptions regarding the quality of NYC schools?</li>
 </ol>
-<h5 id="view-my-linkedin"><a href="https://www.linkedin.com/in/fredrick-boshe/">View my LinkedIn</a></h5>
-<h5 id="view-my-github"><a href="https://github.com/rickyboshe">View my Github</a></h5>
+<p>The survey data can be found <a href="https://data.cityofnewyork.us/Education/2011-NYC-School-Survey/mnz3-dyi8">here</a> while the performance and demographics data can be found <a href="https://data.world/dataquest/nyc-schools-data/workspace/file?filename=combined.csv">here</a>.</p>
+<div id="load-relevant-packages" class="section level3">
+<h3>Load relevant packages</h3>
+<pre class="r"><code>#Loading packages
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(corrplot)
+library(plotly)
+library(ggcorrplot)
+devtools::install_github(&quot;hadley/emo&quot;)</code></pre>
 </div>
-<div class="row" style="padding-top: 60px;">
-<div class="col-sm-6">
-<p><img src="images/Globe.png" /> <a href="https://rickyboshe.github.io/NYC-Schools/"><img src="images/Scatter.png" /></a> <a href="https://sustainabilityx.co/how-millennial-consumers-can-help-make-the-world-a-better-place-9e4b30ffde52"><img src="images/ESG.PNG" /></a> </a></p>
+<div id="import-and-preview-data" class="section level3">
+<h3>Import and preview data</h3>
+<pre class="r"><code>combined&lt;-read_csv(&quot;combined.csv&quot;)
+gened&lt;-read_tsv(&quot;masterfile11_gened_final.txt&quot;)
+spced&lt;-read_tsv(&quot;masterfile11_d75_final.txt&quot;)
+
+glimpse(combined)
+glimpse(gened)
+glimpse(spced)</code></pre>
+<p>Both gened dataframe (General education schools) and spced dataframe (Special education schools), have a key (dbn) that can be matched to the combined dataframe (performance and demographics).</p>
+<p>Special attention to rename “dbn” to “DBN” so they can match. Also note that some variables such as “principal”, are not useful to this analysis. We shall drop such columns. Read the dataset dictionary for more information</p>
+<p>The survey data is also granular, we would like to obtain aggregate perceptions of respondents for the schools in question.</p>
+<p>The factors that respondents were surveyed on were:</p>
+<ul>
+<li>Safety and Respect</li>
+<li>Communication</li>
+<li>Engagement</li>
+<li>Academic Expectations</li>
+</ul>
+<p>The surveyed groups were:</p>
+<ul>
+<li>Parents</li>
+<li>Teachers</li>
+<li>Students</li>
+<li>Total (The average of parent, teacher, and student scores)</li>
+</ul>
+</div>
+<div id="data-cleaning-and-manipulation" class="section level3">
+<h3><strong>Data cleaning and manipulation</strong></h3>
+<pre class="r"><code>#Filter to remain with high school and aggregate columns only
+gened_clean&lt;-gened%&gt;%
+  rename(DBN=dbn)%&gt;%
+  filter(schooltype==&quot;High School&quot;)%&gt;%
+  select(-2:-7,-33:-1942 )
+
+
+spced_clean&lt;-spced%&gt;%
+  rename(DBN=dbn)%&gt;%
+  filter(is.na(highschool))%&gt;%
+  select(-2:-7, -33:-1773)
+
+#Check missing values
+colSums(is.na(gened_clean)) #Two missing student respondents
+colSums(is.na(spced_clean)) #One missing student respondent
+
+#Combine the dataframes
+survey&lt;-rbind(gened_clean,spced_clean)
+
+combined&lt;-combined%&gt;%
+  right_join(survey, by=&quot;DBN&quot;) #right join so we only keep corresponding data that we can use to compare</code></pre>
+<p>Using right_join() helps keep all the survey data that corresponds to matching demographic and school performance data.</p>
+<p>We analyze how perception relates to demographic and school performance via a correlation matrix.</p>
+</div>
+<div id="relationship-analysis" class="section level3">
+<h3>Relationship Analysis</h3>
+<div id="disparity-in-performance-between-nyc-boroughs" class="section level4">
+<h4><strong>Disparity in performance between NYC Boroughs</strong></h4>
+<pre class="r"><code>#Analyze the disparity in performance between the Boroughs
+combined_boro&lt;-combined%&gt;%
+  filter(!is.na(boro))
+
+combined_boro_longer&lt;-combined_boro%&gt;%
+  pivot_longer(cols = c(asian_per, black_per, hispanic_per, white_per),
+               names_to=&quot;race&quot;,
+               values_to=&quot;percent&quot;)
+
+#Plot Performance disparity between Boroughs
+fig1&lt;-combined_boro_longer%&gt;%ggplot(aes(x=boro, y=avg_sat_score, fill=boro))+
+  geom_boxplot()+
+  labs(title = &quot;Average school performance by Borough in NYC (2011)&quot;,
+       y=&quot;Average SAT Score&quot;,
+       x=&quot;Borough&quot;,
+       fill=&quot;Borough&quot;)+
+  theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<center>
+</center>
+<center>
+<iframe src="images/Graph.html" width="75%" height="360px">
+</iframe>
+</center>
+<p><br><br> Schools in the Bronx are averaging lower SAT scores as compared to schools in Manhattan or Staten Island. This is not surprising considering the Socio-economic profile of the Boroughs in New York City. <br><br></p>
+<center>
+<img src="images/Profile.png" title="fig:" alt="Socio-economic profile of NYC Boroughs" />
+</center>
+</div>
+</div>
+<div id="trend-of-nyc-school-performance-with-racial-diversity-of-schools" class="section level3">
+<h3><strong>Trend of NYC school performance with racial diversity of schools</strong></h3>
+<div id="how-racial-diversity-relates-to-school-performance" class="section level4">
+<h4><strong>How racial diversity relates to school performance</strong></h4>
+<pre class="r"><code>#Relationship between school performance and their racial diversity
+race.labs&lt;-c(&quot;Asian&quot;, &quot;Black&quot;, &quot;Hispanic&quot;, &quot;White&quot;)
+names(race.labs)&lt;-c(&quot;asian_per&quot;, &quot;black_per&quot;, &quot;hispanic_per&quot;,
+                    &quot;white_per&quot;)
+
+fig2&lt;-combined_race_longer%&gt;%ggplot(aes(x=percent, y=avg_sat_score, color=race))+
+  geom_point()+
+  labs(title=&quot;Relationship between SAT scores and racial composition of \nschools in NYC&quot;,
+       x= &quot;Percentage composition&quot;,
+       y= &quot;Average SAT score&quot;)+
+  scale_color_manual(
+    name=&quot;Race&quot;,
+    values = c(&quot;Darkorange&quot;, &quot;DarkGreen&quot;, &quot;DarkBlue&quot;, &quot;Purple&quot;),
+    labels=c(&quot;Asian&quot;, &quot;Black&quot;, &quot;Hispanic&quot;, &quot;White&quot;)
+  )+
+  theme(plot.title = element_text(hjust = 0.5))+
+  facet_wrap(~race, labeller = labeller(race=race.labs))</code></pre>
+<center>
+<img src="images/Scatter.png" />
+</center>
+<p>Schools with a higher proportion of Black and Hispanic have lower SAT scores as compared to schools with a higher share of White and Asian students.This could be due to the location, programs and resources at the disposal of schools.</p>
+<p>Schools in boroughs like Staten Island and Manhattan would have more resources and have a higher proportion of White and Asian students as compared to schools in Bronx and Brooklyn.</p>
+</div>
+<div id="how-schools-with-special-programs-fair-in-academic-performance" class="section level4">
+<h4><strong>How schools with special programs fair in academic performance</strong></h4>
+<pre class="r"><code>#Trend of SAT scores with the type of program available for students
+prog.labs&lt;-c(&quot;Learning to speak English&quot;, &quot;Receiving lunch discount&quot;,
+             &quot;Receiving specialized teaching&quot;)
+names(prog.labs)&lt;-c(&quot;ell_percent&quot;,&quot;frl_percent&quot;, &quot;sped_percent&quot;)
+
+fig3&lt;-combined_type_longer%&gt;%ggplot(aes(x=percent, y=avg_sat_score, color=`Type of program`))+
+  geom_point()+
+  labs(title=&quot;Relationship between SAT scores and socioeconomic factors&quot;,
+       x= &quot;Percentage composition&quot;,
+       y= &quot;Average SAT score&quot;)+
+  scale_color_manual(
+    name=&quot;Student&quot;,
+    values = c(&quot;maroon&quot;, &quot;forestgreen&quot;, &quot;chocolate&quot;),
+    labels=c(&quot;Receiving lunch \ndiscount&quot;, &quot;Learning to speak \nEnglish&quot;, &quot;Receiving specialized \nteaching&quot;)
+  )+
+  theme(plot.title = element_text(hjust = 0.5))+ #strip.text.x = element_blank()
+  facet_wrap(~`Type of program`, labeller = labeller(`Type of program`=prog.labs))</code></pre>
+<center>
+<iframe src="images/special.html" width="100%" height="450px">
+</iframe>
+</center>
+<p>The most significant observation is how drastically school performance drops with increase in number of students eligible for lunch discount at a school. This is an indication of a school being in a socially and economically disadvantaged location. Such schools rarely have enough resources to help students perform better academically.</p>
+<p>An increase in the sahre of students learning to speak English is also related to lower academic performance for the school. Learning to speak English can be an indicator of share of students with a lower economic migrant background. <br><br></p>
+<pre class="r"><code>p.mat&lt;-cor_pmat(cor_mat)#pvalues
+
+cor_tib&lt;-cor_mat%&gt;%
+  as_tibble(rownames=&quot;variable&quot;)#A tibble for easier viewing
+
+
+#Variables with strong relationship with Avg sat score
+strong_cor&lt;-cor_tib%&gt;%
+  select(variable, Avg_SAT_score)%&gt;%
+  filter(Avg_SAT_score  &lt; -0.25|Avg_SAT_score &gt;0.25)
+
+
+strong_cor_mat&lt;-as.matrix(strong_cor)
+
+#Plot matrix table to see strength of relationships
+fig4 &lt;- ggcorrplot(
+  cor_mat, hc.order = TRUE, type = &quot;lower&quot;, title = &quot;Correlation matrix between school \nperformance and demographics&quot;, outline.col = &quot;white&quot;,
+  p.mat = p.mat
+  )</code></pre>
+<center>
+<div id="htmlwidget-81ab3927606a97f8eacf" style="width:768px;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-81ab3927606a97f8eacf">{"x":{"data":[{"x":[1,2,3,4,5,6,7,8,9,10,11,12],"y":[1,2,3,4,5,6,7,8,9,10,11,12],"z":[[0.5,0.463855421686747,0.439759036144578,0.572289156626506,0.439759036144578,0.325301204819277,0.373493975903614,0.409638554216867,0.391566265060241,0.463855421686747,0.385542168674699,0.385542168674699],[null,0.692771084337349,0.662650602409639,0.228915662650602,0.204819277108434,0.524096385542169,0.469879518072289,0.469879518072289,0.493975903614458,0.542168674698795,0.204819277108434,0.343373493975904],[null,null,0.765060240963855,0.58433734939759,0.451807228915663,0.379518072289157,0.367469879518072,0.391566265060241,0.385542168674699,0.228915662650602,0,0.0180722891566265],[null,null,null,0.536144578313253,0.0843373493975904,0.487951807228916,0.439759036144578,0.451807228915663,0.451807228915663,0.228915662650602,0.204819277108434,0.234939759036145],[null,null,null,null,0.58433734939759,0.174698795180723,0.253012048192771,0.325301204819277,0.289156626506024,0.150602409638554,0.186746987951807,0.27710843373494],[null,null,null,null,null,0.216867469879518,0.349397590361446,0.36144578313253,0.349397590361446,0.174698795180723,0.240963855421687,0.192771084337349],[null,null,null,null,null,null,0.94578313253012,0.91566265060241,0.939759036144578,0.578313253012048,0.602409638554217,0.58433734939759],[null,null,null,null,null,null,null,0.981927710843373,1,0.481927710843373,0.536144578313253,0.536144578313253],[null,null,null,null,null,null,null,null,1,0.44578313253012,0.487951807228916,0.518072289156627],[null,null,null,null,null,null,null,null,null,0.457831325301205,0.487951807228916,0.536144578313253],[null,null,null,null,null,null,null,null,null,null,0.783132530120482,0.644578313253012],[null,null,null,null,null,null,null,null,null,null,null,0.831325301204819]],"text":[["value:  0.11<br />Var1: % learning english<br />Var2: % male","value:  0.05<br />Var1: % receiving food discount<br />Var2: % male","value:  0.01<br />Var1: % Hispanic<br />Var2: % male","value:  0.23<br />Var1: % receiving specialized teaching<br />Var2: % male","value:  0.01<br />Var1: % Black<br />Var2: % male","value: -0.18<br />Var1: Safety<br />Var2: % male","value: -0.10<br />Var1: Academic<br />Var2: % male","value: -0.04<br />Var1: Communication<br />Var2: % male","value: -0.07<br />Var1: Engagement<br />Var2: % male","value:  0.05<br />Var1: % Asian<br />Var2: % male","value: -0.08<br />Var1: Avg_SAT_score<br />Var2: % male","value: -0.08<br />Var1: % White<br />Var2: % male"],[null,"value:  0.43<br />Var1: % receiving food discount<br />Var2: % learning english","value:  0.38<br />Var1: % Hispanic<br />Var2: % learning english","value: -0.34<br />Var1: % receiving specialized teaching<br />Var2: % learning english","value: -0.38<br />Var1: % Black<br />Var2: % learning english","value:  0.15<br />Var1: Safety<br />Var2: % learning english","value:  0.06<br />Var1: Academic<br />Var2: % learning english","value:  0.06<br />Var1: Communication<br />Var2: % learning english","value:  0.10<br />Var1: Engagement<br />Var2: % learning english","value:  0.18<br />Var1: % Asian<br />Var2: % learning english","value: -0.38<br />Var1: Avg_SAT_score<br />Var2: % learning english","value: -0.15<br />Var1: % White<br />Var2: % learning english"],[null,null,"value:  0.55<br />Var1: % Hispanic<br />Var2: % receiving food discount","value:  0.25<br />Var1: % receiving specialized teaching<br />Var2: % receiving food discount","value:  0.03<br />Var1: % Black<br />Var2: % receiving food discount","value: -0.09<br />Var1: Safety<br />Var2: % receiving food discount","value: -0.11<br />Var1: Academic<br />Var2: % receiving food discount","value: -0.07<br />Var1: Communication<br />Var2: % receiving food discount","value: -0.08<br />Var1: Engagement<br />Var2: % receiving food discount","value: -0.34<br />Var1: % Asian<br />Var2: % receiving food discount","value: -0.72<br />Var1: Avg_SAT_score<br />Var2: % receiving food discount","value: -0.69<br />Var1: % White<br />Var2: % receiving food discount"],[null,null,null,"value:  0.17<br />Var1: % receiving specialized teaching<br />Var2: % Hispanic","value: -0.58<br />Var1: % Black<br />Var2: % Hispanic","value:  0.09<br />Var1: Safety<br />Var2: % Hispanic","value:  0.01<br />Var1: Academic<br />Var2: % Hispanic","value:  0.03<br />Var1: Communication<br />Var2: % Hispanic","value:  0.03<br />Var1: Engagement<br />Var2: % Hispanic","value: -0.34<br />Var1: % Asian<br />Var2: % Hispanic","value: -0.38<br />Var1: Avg_SAT_score<br />Var2: % Hispanic","value: -0.33<br />Var1: % White<br />Var2: % Hispanic"],[null,null,null,null,"value:  0.25<br />Var1: % Black<br />Var2: % receiving specialized teaching","value: -0.43<br />Var1: Safety<br />Var2: % receiving specialized teaching","value: -0.30<br />Var1: Academic<br />Var2: % receiving specialized teaching","value: -0.18<br />Var1: Communication<br />Var2: % receiving specialized teaching","value: -0.24<br />Var1: Engagement<br />Var2: % receiving specialized teaching","value: -0.47<br />Var1: % Asian<br />Var2: % receiving specialized teaching","value: -0.41<br />Var1: Avg_SAT_score<br />Var2: % receiving specialized teaching","value: -0.26<br />Var1: % White<br />Var2: % receiving specialized teaching"],[null,null,null,null,null,"value: -0.36<br />Var1: Safety<br />Var2: % Black","value: -0.14<br />Var1: Academic<br />Var2: % Black","value: -0.12<br />Var1: Communication<br />Var2: % Black","value: -0.14<br />Var1: Engagement<br />Var2: % Black","value: -0.43<br />Var1: % Asian<br />Var2: % Black","value: -0.32<br />Var1: Avg_SAT_score<br />Var2: % Black","value: -0.40<br />Var1: % White<br />Var2: % Black"],[null,null,null,null,null,null,"value:  0.85<br />Var1: Academic<br />Var2: Safety","value:  0.80<br />Var1: Communication<br />Var2: Safety","value:  0.84<br />Var1: Engagement<br />Var2: Safety","value:  0.24<br />Var1: % Asian<br />Var2: Safety","value:  0.28<br />Var1: Avg_SAT_score<br />Var2: Safety","value:  0.25<br />Var1: % White<br />Var2: Safety"],[null,null,null,null,null,null,null,"value:  0.91<br />Var1: Communication<br />Var2: Academic","value:  0.94<br />Var1: Engagement<br />Var2: Academic","value:  0.08<br />Var1: % Asian<br />Var2: Academic","value:  0.17<br />Var1: Avg_SAT_score<br />Var2: Academic","value:  0.17<br />Var1: % White<br />Var2: Academic"],[null,null,null,null,null,null,null,null,"value:  0.94<br />Var1: Engagement<br />Var2: Communication","value:  0.02<br />Var1: % Asian<br />Var2: Communication","value:  0.09<br />Var1: Avg_SAT_score<br />Var2: Communication","value:  0.14<br />Var1: % White<br />Var2: Communication"],[null,null,null,null,null,null,null,null,null,"value:  0.04<br />Var1: % Asian<br />Var2: Engagement","value:  0.09<br />Var1: Avg_SAT_score<br />Var2: Engagement","value:  0.17<br />Var1: % White<br />Var2: Engagement"],[null,null,null,null,null,null,null,null,null,null,"value:  0.58<br />Var1: Avg_SAT_score<br />Var2: % Asian","value:  0.35<br />Var1: % White<br />Var2: % Asian"],[null,null,null,null,null,null,null,null,null,null,null,"value:  0.66<br />Var1: % White<br />Var2: Avg_SAT_score"]],"colorscale":[[0,"#8659FF"],[0.0180722891566265,"#8D60FF"],[0.0843373493975904,"#A479FF"],[0.150602409638554,"#B892FF"],[0.174698795180723,"#BF9BFF"],[0.186746987951807,"#C3A0FF"],[0.192771084337349,"#C4A2FF"],[0.204819277108434,"#C8A7FF"],[0.216867469879518,"#CBABFF"],[0.228915662650602,"#CEB0FF"],[0.234939759036145,"#D0B2FF"],[0.240963855421687,"#D1B4FF"],[0.253012048192771,"#D4B9FF"],[0.27710843373494,"#DAC2FF"],[0.289156626506024,"#DDC7FF"],[0.325301204819277,"#E6D5FF"],[0.343373493975904,"#EBDCFF"],[0.349397590361446,"#ECDEFF"],[0.36144578313253,"#EFE3FF"],[0.367469879518072,"#F0E5FF"],[0.373493975903614,"#F2E7FF"],[0.379518072289157,"#F3EAFF"],[0.385542168674699,"#F4ECFF"],[0.391566265060241,"#F6EEFF"],[0.409638554216867,"#FAF6FF"],[0.439759036144578,"#FFFDFC"],[0.44578313253012,"#FFFBFA"],[0.451807228915663,"#FFF9F7"],[0.457831325301205,"#FFF7F5"],[0.463855421686747,"#FFF5F2"],[0.469879518072289,"#FFF4EF"],[0.481927710843373,"#FFF0EA"],[0.487951807228916,"#FFEEE8"],[0.493975903614458,"#FFECE5"],[0.5,"#FFEAE2"],[0.518072289156627,"#FFE4DB"],[0.524096385542169,"#FFE2D8"],[0.536144578313253,"#FFDFD3"],[0.542168674698795,"#FFDDD0"],[0.572289156626506,"#FFD3C4"],[0.578313253012048,"#FFD1C1"],[0.58433734939759,"#FFCFBF"],[0.602409638554217,"#FFC9B7"],[0.644578313253012,"#FFBCA6"],[0.662650602409639,"#FFB69E"],[0.692771084337349,"#FFAC92"],[0.765060240963855,"#FF9475"],[0.783132530120482,"#FF8D6E"],[0.831325301204819,"#FF7C5B"],[0.91566265060241,"#FF5B3A"],[0.939759036144578,"#FF5031"],[0.94578313253012,"#FF4D2E"],[0.981927710843373,"#FF3A1F"],[1,"#FF2E16"]],"type":"heatmap","showscale":false,"autocolorscale":false,"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,2,3,4,5,6,7,8,9,10,11,12,4,5,6,7,8,9,10,11,12,4,5,6,7,8,9,4,5,6,7,8,9,10,8,6,7,8,9,11,12,10,11,12,10,11,12,10,11,12,10,11,12],"y":[1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,4,4,4,4,4,4,4,5,6,6,6,6,6,6,7,7,7,8,8,8,9,9,9,10,10,10],"text":["Var1: % learning english<br />Var2: % male<br />value: 0.83<br />Var1: % learning english<br />Var2: % male","Var1: % receiving food discount<br />Var2: % male<br />value: 0.52<br />Var1: % receiving food discount<br />Var2: % male","Var1: % Hispanic<br />Var2: % male<br />value: 0.84<br />Var1: % Hispanic<br />Var2: % male","Var1: % receiving specialized teaching<br />Var2: % male<br />value: 0.14<br />Var1: % receiving specialized teaching<br />Var2: % male","Var1: % Black<br />Var2: % male<br />value: 0.55<br />Var1: % Black<br />Var2: % male","Var1: Safety<br />Var2: % male<br />value: 0.07<br />Var1: Safety<br />Var2: % male","Var1: Academic<br />Var2: % male<br />value: 0.11<br />Var1: Academic<br />Var2: % male","Var1: Communication<br />Var2: % male<br />value: 0.15<br />Var1: Communication<br />Var2: % male","Var1: Engagement<br />Var2: % male<br />value: 0.13<br />Var1: Engagement<br />Var2: % male","Var1: % Asian<br />Var2: % male<br />value: 0.64<br />Var1: % Asian<br />Var2: % male","Var1: Avg_SAT_score<br />Var2: % male<br />value: 0.36<br />Var1: Avg_SAT_score<br />Var2: % male","Var1: % White<br />Var2: % male<br />value: 0.36<br />Var1: % White<br />Var2: % male","Var1: % receiving specialized teaching<br />Var2: % learning english<br />value: 0.38<br />Var1: % receiving specialized teaching<br />Var2: % learning english","Var1: % Black<br />Var2: % learning english<br />value: 0.10<br />Var1: % Black<br />Var2: % learning english","Var1: Safety<br />Var2: % learning english<br />value: 0.63<br />Var1: Safety<br />Var2: % learning english","Var1: Academic<br />Var2: % learning english<br />value: 0.90<br />Var1: Academic<br />Var2: % learning english","Var1: Communication<br />Var2: % learning english<br />value: 0.90<br />Var1: Communication<br />Var2: % learning english","Var1: Engagement<br />Var2: % learning english<br />value: 0.83<br />Var1: Engagement<br />Var2: % learning english","Var1: % Asian<br />Var2: % learning english<br />value: 0.88<br />Var1: % Asian<br />Var2: % learning english","Var1: Avg_SAT_score<br />Var2: % learning english<br />value: 0.15<br />Var1: Avg_SAT_score<br />Var2: % learning english","Var1: % White<br />Var2: % learning english<br />value: 0.27<br />Var1: % White<br />Var2: % learning english","Var1: % receiving specialized teaching<br />Var2: % receiving food discount<br />value: 0.07<br />Var1: % receiving specialized teaching<br />Var2: % receiving food discount","Var1: % Black<br />Var2: % receiving food discount<br />value: 0.58<br />Var1: % Black<br />Var2: % receiving food discount","Var1: Safety<br />Var2: % receiving food discount<br />value: 0.26<br />Var1: Safety<br />Var2: % receiving food discount","Var1: Academic<br />Var2: % receiving food discount<br />value: 0.31<br />Var1: Academic<br />Var2: % receiving food discount","Var1: Communication<br />Var2: % receiving food discount<br />value: 0.42<br />Var1: Communication<br />Var2: % receiving food discount","Var1: Engagement<br />Var2: % receiving food discount<br />value: 0.40<br />Var1: Engagement<br />Var2: % receiving food discount","Var1: % receiving specialized teaching<br />Var2: % Hispanic<br />value: 0.36<br />Var1: % receiving specialized teaching<br />Var2: % Hispanic","Var1: % Black<br />Var2: % Hispanic<br />value: 0.19<br />Var1: % Black<br />Var2: % Hispanic","Var1: Safety<br />Var2: % Hispanic<br />value: 0.95<br />Var1: Safety<br />Var2: % Hispanic","Var1: Academic<br />Var2: % Hispanic<br />value: 0.82<br />Var1: Academic<br />Var2: % Hispanic","Var1: Communication<br />Var2: % Hispanic<br />value: 0.92<br />Var1: Communication<br />Var2: % Hispanic","Var1: Engagement<br />Var2: % Hispanic<br />value: 0.92<br />Var1: Engagement<br />Var2: % Hispanic","Var1: % Asian<br />Var2: % Hispanic<br />value: 0.12<br />Var1: % Asian<br />Var2: % Hispanic","Var1: Communication<br />Var2: % receiving specialized teaching<br />value: 0.08<br />Var1: Communication<br />Var2: % receiving specialized teaching","Var1: Safety<br />Var2: % Black<br />value: 0.09<br />Var1: Safety<br />Var2: % Black","Var1: Academic<br />Var2: % Black<br />value: 0.34<br />Var1: Academic<br />Var2: % Black","Var1: Communication<br />Var2: % Black<br />value: 0.43<br />Var1: Communication<br />Var2: % Black","Var1: Engagement<br />Var2: % Black<br />value: 0.37<br />Var1: Engagement<br />Var2: % Black","Var1: Avg_SAT_score<br />Var2: % Black<br />value: 0.16<br />Var1: Avg_SAT_score<br />Var2: % Black","Var1: % White<br />Var2: % Black<br />value: 0.10<br />Var1: % White<br />Var2: % Black","Var1: % Asian<br />Var2: Safety<br />value: 0.17<br />Var1: % Asian<br />Var2: Safety","Var1: Avg_SAT_score<br />Var2: Safety<br />value: 0.12<br />Var1: Avg_SAT_score<br />Var2: Safety","Var1: % White<br />Var2: Safety<br />value: 0.10<br />Var1: % White<br />Var2: Safety","Var1: % Asian<br />Var2: Academic<br />value: 0.44<br />Var1: % Asian<br />Var2: Academic","Var1: Avg_SAT_score<br />Var2: Academic<br />value: 0.24<br />Var1: Avg_SAT_score<br />Var2: Academic","Var1: % White<br />Var2: Academic<br />value: 0.21<br />Var1: % White<br />Var2: Academic","Var1: % Asian<br />Var2: Communication<br />value: 0.62<br />Var1: % Asian<br />Var2: Communication","Var1: Avg_SAT_score<br />Var2: Communication<br />value: 0.37<br />Var1: Avg_SAT_score<br />Var2: Communication","Var1: % White<br />Var2: Communication<br />value: 0.30<br />Var1: % White<br />Var2: Communication","Var1: % Asian<br />Var2: Engagement<br />value: 0.55<br />Var1: % Asian<br />Var2: Engagement","Var1: Avg_SAT_score<br />Var2: Engagement<br />value: 0.34<br />Var1: Avg_SAT_score<br />Var2: Engagement","Var1: % White<br />Var2: Engagement<br />value: 0.27<br />Var1: % White<br />Var2: Engagement"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,83,51,1)","opacity":1,"size":18.8976377952756,"symbol":"x-thin-open","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1],"y":[1],"name":"99_952f005d9b9dfdf809e1822ff1ee0904","type":"scatter","mode":"markers","opacity":0,"hoverinfo":"skip","showlegend":false,"marker":{"color":[0,1],"colorscale":[[0,"#0000FF"],[0.00334448160535117,"#1004FF"],[0.00668896321070234,"#1A09FF"],[0.0100334448160535,"#210DFF"],[0.0133779264214047,"#2710FF"],[0.0167224080267558,"#2D14FF"],[0.020066889632107,"#3117FF"],[0.0234113712374582,"#3619FF"],[0.0267558528428093,"#3A1CFF"],[0.0301003344481605,"#3D1EFF"],[0.0334448160535117,"#4121FF"],[0.0367892976588629,"#4423FF"],[0.040133779264214,"#4725FF"],[0.0434782608695652,"#4A27FF"],[0.0468227424749164,"#4D29FF"],[0.0501672240802676,"#502BFF"],[0.0535117056856187,"#522DFF"],[0.0568561872909699,"#552FFF"],[0.0602006688963211,"#5731FF"],[0.0635451505016723,"#5A33FF"],[0.0668896321070234,"#5C34FF"],[0.0702341137123746,"#5F36FF"],[0.0735785953177258,"#6138FF"],[0.0769230769230769,"#633AFF"],[0.0802675585284281,"#653BFF"],[0.0836120401337793,"#673DFF"],[0.0869565217391304,"#693FFF"],[0.0903010033444816,"#6B41FF"],[0.0936454849498328,"#6D42FF"],[0.0969899665551839,"#6F44FF"],[0.100334448160535,"#7146FF"],[0.103678929765886,"#7347FF"],[0.107023411371237,"#7549FF"],[0.110367892976589,"#774AFF"],[0.11371237458194,"#784CFF"],[0.117056856187291,"#7A4EFF"],[0.120401337792642,"#7C4FFF"],[0.123745819397993,"#7E51FF"],[0.127090301003345,"#7F53FF"],[0.130434782608696,"#8154FF"],[0.133779264214047,"#8356FF"],[0.137123745819398,"#8457FF"],[0.140468227424749,"#8659FF"],[0.1438127090301,"#875AFF"],[0.147157190635452,"#895CFF"],[0.150501672240803,"#8A5EFF"],[0.153846153846154,"#8C5FFF"],[0.157190635451505,"#8E61FF"],[0.160535117056856,"#8F62FF"],[0.163879598662207,"#9164FF"],[0.167224080267559,"#9265FF"],[0.17056856187291,"#9367FF"],[0.173913043478261,"#9568FF"],[0.177257525083612,"#966AFF"],[0.180602006688963,"#986BFF"],[0.183946488294314,"#996DFF"],[0.187290969899666,"#9B6FFF"],[0.190635451505017,"#9C70FF"],[0.193979933110368,"#9D72FF"],[0.197324414715719,"#9F73FF"],[0.20066889632107,"#A075FF"],[0.204013377926421,"#A176FF"],[0.207357859531773,"#A378FF"],[0.210702341137124,"#A479FF"],[0.214046822742475,"#A57BFF"],[0.217391304347826,"#A77CFF"],[0.220735785953177,"#A87EFF"],[0.224080267558528,"#A97FFF"],[0.22742474916388,"#AA81FF"],[0.230769230769231,"#AC82FF"],[0.234113712374582,"#AD84FF"],[0.237458193979933,"#AE85FF"],[0.240802675585284,"#AF87FF"],[0.244147157190635,"#B189FF"],[0.247491638795987,"#B28AFF"],[0.250836120401338,"#B38CFF"],[0.254180602006689,"#B48DFF"],[0.25752508361204,"#B68FFF"],[0.260869565217391,"#B790FF"],[0.264214046822742,"#B892FF"],[0.267558528428094,"#B993FF"],[0.270903010033445,"#BA95FF"],[0.274247491638796,"#BB96FF"],[0.277591973244147,"#BD98FF"],[0.280936454849498,"#BE99FF"],[0.284280936454849,"#BF9BFF"],[0.287625418060201,"#C09CFF"],[0.290969899665552,"#C19EFF"],[0.294314381270903,"#C29FFF"],[0.297658862876254,"#C3A1FF"],[0.301003344481605,"#C5A2FF"],[0.304347826086957,"#C6A4FF"],[0.307692307692308,"#C7A6FF"],[0.311036789297659,"#C8A7FF"],[0.31438127090301,"#C9A9FF"],[0.317725752508361,"#CAAAFF"],[0.321070234113712,"#CBACFF"],[0.324414715719064,"#CCADFF"],[0.327759197324415,"#CDAFFF"],[0.331103678929766,"#CEB0FF"],[0.334448160535117,"#CFB2FF"],[0.337792642140468,"#D1B3FF"],[0.341137123745819,"#D2B5FF"],[0.344481605351171,"#D3B6FF"],[0.347826086956522,"#D4B8FF"],[0.351170568561873,"#D5B9FF"],[0.354515050167224,"#D6BBFF"],[0.357859531772575,"#D7BDFF"],[0.361204013377926,"#D8BEFF"],[0.364548494983278,"#D9C0FF"],[0.367892976588629,"#DAC1FF"],[0.37123745819398,"#DBC3FF"],[0.374581939799331,"#DCC4FF"],[0.377926421404682,"#DDC6FF"],[0.381270903010033,"#DEC7FF"],[0.384615384615385,"#DFC9FF"],[0.387959866220736,"#E0CAFF"],[0.391304347826087,"#E1CCFF"],[0.394648829431438,"#E2CEFF"],[0.397993311036789,"#E3CFFF"],[0.40133779264214,"#E4D1FF"],[0.404682274247492,"#E5D2FF"],[0.408026755852843,"#E6D4FF"],[0.411371237458194,"#E7D5FF"],[0.414715719063545,"#E8D7FF"],[0.418060200668896,"#E9D8FF"],[0.421404682274247,"#EADAFF"],[0.424749163879599,"#EBDCFF"],[0.42809364548495,"#EBDDFF"],[0.431438127090301,"#ECDFFF"],[0.434782608695652,"#EDE0FF"],[0.438127090301003,"#EEE2FF"],[0.441471571906354,"#EFE3FF"],[0.444816053511706,"#F0E5FF"],[0.448160535117057,"#F1E7FF"],[0.451505016722408,"#F2E8FF"],[0.454849498327759,"#F3EAFF"],[0.45819397993311,"#F4EBFF"],[0.461538461538462,"#F5EDFF"],[0.464882943143813,"#F6EEFF"],[0.468227424749164,"#F7F0FF"],[0.471571906354515,"#F7F2FF"],[0.474916387959866,"#F8F3FF"],[0.478260869565217,"#F9F5FF"],[0.481605351170569,"#FAF6FF"],[0.48494983277592,"#FBF8FF"],[0.488294314381271,"#FCF9FF"],[0.491638795986622,"#FDFBFF"],[0.494983277591973,"#FEFDFF"],[0.498327759197324,"#FFFEFF"],[0.501672240802676,"#FFFEFE"],[0.505016722408027,"#FFFDFC"],[0.508361204013378,"#FFFCFB"],[0.511705685618729,"#FFFBF9"],[0.51505016722408,"#FFF9F7"],[0.518394648829431,"#FFF8F5"],[0.521739130434783,"#FFF7F4"],[0.525083612040134,"#FFF5F2"],[0.528428093645485,"#FFF4F0"],[0.531772575250836,"#FFF3EE"],[0.535117056856187,"#FFF2ED"],[0.538461538461538,"#FFF0EB"],[0.54180602006689,"#FFEFE9"],[0.545150501672241,"#FFEEE7"],[0.548494983277592,"#FFEDE6"],[0.551839464882943,"#FFEBE4"],[0.555183946488294,"#FFEAE2"],[0.558528428093645,"#FFE9E1"],[0.561872909698997,"#FFE7DF"],[0.565217391304348,"#FFE6DD"],[0.568561872909699,"#FFE5DB"],[0.57190635451505,"#FFE4DA"],[0.575250836120401,"#FFE2D8"],[0.578595317725752,"#FFE1D6"],[0.581939799331104,"#FFE0D5"],[0.585284280936455,"#FFDED3"],[0.588628762541806,"#FFDDD1"],[0.591973244147157,"#FFDCCF"],[0.595317725752508,"#FFDBCE"],[0.598662207357859,"#FFD9CC"],[0.602006688963211,"#FFD8CA"],[0.605351170568562,"#FFD7C9"],[0.608695652173913,"#FFD5C7"],[0.612040133779264,"#FFD4C5"],[0.615384615384615,"#FFD3C4"],[0.618729096989967,"#FFD2C2"],[0.622073578595318,"#FFD0C0"],[0.625418060200669,"#FFCFBE"],[0.62876254180602,"#FFCEBD"],[0.632107023411371,"#FFCCBB"],[0.635451505016722,"#FFCBB9"],[0.638795986622074,"#FFCAB8"],[0.642140468227425,"#FFC9B6"],[0.645484949832776,"#FFC7B4"],[0.648829431438127,"#FFC6B3"],[0.652173913043478,"#FFC5B1"],[0.655518394648829,"#FFC3AF"],[0.658862876254181,"#FFC2AE"],[0.662207357859532,"#FFC1AC"],[0.665551839464883,"#FFBFAA"],[0.668896321070234,"#FFBEA9"],[0.672240802675585,"#FFBDA7"],[0.675585284280936,"#FFBCA5"],[0.678929765886288,"#FFBAA4"],[0.682274247491639,"#FFB9A2"],[0.68561872909699,"#FFB8A1"],[0.688963210702341,"#FFB69F"],[0.692307692307692,"#FFB59D"],[0.695652173913043,"#FFB49C"],[0.698996655518395,"#FFB29A"],[0.702341137123746,"#FFB198"],[0.705685618729097,"#FFB097"],[0.709030100334448,"#FFAE95"],[0.712374581939799,"#FFAD93"],[0.71571906354515,"#FFAC92"],[0.719063545150502,"#FFAA90"],[0.722408026755853,"#FFA98F"],[0.725752508361204,"#FFA88D"],[0.729096989966555,"#FFA68B"],[0.732441471571906,"#FFA58A"],[0.735785953177257,"#FFA488"],[0.739130434782609,"#FFA286"],[0.74247491638796,"#FFA185"],[0.745819397993311,"#FFA083"],[0.749163879598662,"#FF9E82"],[0.752508361204013,"#FF9D80"],[0.755852842809364,"#FF9C7E"],[0.759197324414716,"#FF9A7D"],[0.762541806020067,"#FF997B"],[0.765886287625418,"#FF977A"],[0.769230769230769,"#FF9678"],[0.77257525083612,"#FF9576"],[0.775919732441472,"#FF9375"],[0.779264214046823,"#FF9273"],[0.782608695652174,"#FF9172"],[0.785953177257525,"#FF8F70"],[0.789297658862876,"#FF8E6E"],[0.792642140468227,"#FF8C6D"],[0.795986622073579,"#FF8B6B"],[0.79933110367893,"#FF896A"],[0.802675585284281,"#FF8868"],[0.806020066889632,"#FF8767"],[0.809364548494983,"#FF8565"],[0.812709030100334,"#FF8463"],[0.816053511705686,"#FF8262"],[0.819397993311037,"#FF8160"],[0.822742474916388,"#FF7F5F"],[0.826086956521739,"#FF7E5D"],[0.82943143812709,"#FF7C5C"],[0.832775919732441,"#FF7B5A"],[0.836120401337793,"#FF7A58"],[0.839464882943144,"#FF7857"],[0.842809364548495,"#FF7755"],[0.846153846153846,"#FF7554"],[0.849498327759197,"#FF7452"],[0.852842809364548,"#FF7251"],[0.8561872909699,"#FF704F"],[0.859531772575251,"#FF6F4D"],[0.862876254180602,"#FF6D4C"],[0.866220735785953,"#FF6C4A"],[0.869565217391304,"#FF6A49"],[0.872909698996655,"#FF6947"],[0.876254180602007,"#FF6746"],[0.879598662207358,"#FF6544"],[0.882943143812709,"#FF6442"],[0.88628762541806,"#FF6241"],[0.889632107023411,"#FF603F"],[0.892976588628763,"#FF5F3E"],[0.896321070234114,"#FF5D3C"],[0.899665551839465,"#FF5B3B"],[0.903010033444816,"#FF5939"],[0.906354515050167,"#FF5837"],[0.909698996655518,"#FF5636"],[0.91304347826087,"#FF5434"],[0.916387959866221,"#FF5232"],[0.919732441471572,"#FF5031"],[0.923076923076923,"#FF4E2F"],[0.926421404682274,"#FF4D2E"],[0.929765886287625,"#FF4B2C"],[0.933110367892977,"#FF492A"],[0.936454849498328,"#FF4629"],[0.939799331103679,"#FF4427"],[0.94314381270903,"#FF4225"],[0.946488294314381,"#FF4023"],[0.949832775919732,"#FF3E22"],[0.953177257525084,"#FF3B20"],[0.956521739130435,"#FF391E"],[0.959866220735786,"#FF361C"],[0.963210702341137,"#FF341A"],[0.966555183946488,"#FF3118"],[0.969899665551839,"#FF2E16"],[0.973244147157191,"#FF2B14"],[0.976588628762542,"#FF2812"],[0.979933110367893,"#FF2410"],[0.983277591973244,"#FF210D"],[0.986622073578595,"#FF1C0B"],[0.989966555183946,"#FF1708"],[0.993311036789298,"#FF1205"],[0.996655518394649,"#FF0A02"],[1,"#FF0000"]],"colorbar":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"thickness":23.04,"title":"Corr","titlefont":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"tickmode":"array","ticktext":["-1.0","-0.5","0.0","0.5","1.0"],"tickvals":[0,0.25,0.5,0.75,1],"tickfont":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"ticklen":2,"len":0.5}},"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":43.2754946727549,"r":7.30593607305936,"b":147.635644902696,"l":266.002490660025},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"Correlation matrix between school <br />performance and demographics","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,12.6],"tickmode":"array","ticktext":["% learning english","% receiving food discount","% Hispanic","% receiving specialized teaching","% Black","Safety","Academic","Communication","Engagement","% Asian","Avg_SAT_score","% White"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12],"categoryorder":"array","categoryarray":["% learning english","% receiving food discount","% Hispanic","% receiving specialized teaching","% Black","Safety","Academic","Communication","Engagement","% Asian","Avg_SAT_score","% White"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":15.9402241594022},"tickangle":-45,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":null,"family":null,"size":0}},"scaleanchor":"y","scaleratio":1,"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,12.6],"tickmode":"array","ticktext":["% male","% learning english","% receiving food discount","% Hispanic","% receiving specialized teaching","% Black","Safety","Academic","Communication","Engagement","% Asian","Avg_SAT_score"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12],"categoryorder":"array","categoryarray":["% male","% learning english","% receiving food discount","% Hispanic","% receiving specialized teaching","% Black","Safety","Academic","Communication","Engagement","% Asian","Avg_SAT_score"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":15.9402241594022},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":null,"family":null,"size":0}},"scaleanchor":"x","scaleratio":1,"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"444067e9380e":{"fill":{},"x":{},"y":{},"type":"heatmap"},"444065636750":{"x":{},"y":{},"fill":{},"x.1":{},"y.1":{}}},"cur_data":"444067e9380e","visdat":{"444067e9380e":["function (y) ","x"],"444065636750":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</center>
+<p>A correlation analysis shows how strong the relationships between racial diversity and school programs are with the academic performance of the school.</p>
+<p>When it comes to demographics, academic performance shows a strong positive correlation with the percentage of white students in a school (r= 0.65). While it has the strongest negative relationship with the percentage of students that are eligible for food discount at a school (r= -0.72).</p>
+<p>Overall, the strongest positive relationships are among the perceptions of NYC schools. The respondents (teachers, students and parents) of the survey seem to have correlating perceptions of how NYC schools perform when it comes to academic performance, communication, engagement and safety.</p>
+</div>
+<div id="how-teachers-students-and-parents-rate-nyc-schools" class="section level4">
+<h4><strong>How teachers, students and parents rate NYC schools</strong></h4>
+<pre class="r"><code>#establish average scores per respondent group
+
+survey_score&lt;-combined%&gt;%
+  mutate(parent_score_avg=(saf_p_11+com_p_11+eng_p_11+aca_p_11)/4)%&gt;%
+  mutate(teacher_score_avg=(saf_t_11+com_t_11+eng_t_11+aca_t_11)/4)%&gt;%
+  mutate(student_score_avg=(saf_s_11+com_s_11+eng_s_11+aca_s_11)/4)
+
+#Pivot table longer to make it easier to plot on same scatter plot
+survey_score_longer&lt;-survey_score%&gt;%
+  pivot_longer(cols = c(parent_score_avg, teacher_score_avg, student_score_avg),
+               names_to= &quot;respondent&quot;,
+               values_to= &quot;avg_score&quot;)
+
+
+#Plot the spread of the respondents average scores
+fig5&lt;-survey_score_longer%&gt;%ggplot(aes(x=respondent, y=avg_score, fill=respondent))+
+  geom_boxplot()+
+  scale_x_discrete(labels=c(&quot;parent_score_avg&quot; = &quot;Parent&quot;, &quot;student_score_avg&quot; = &quot;Student&quot;,&quot;teacher_score_avg&quot; = &quot;Teacher&quot;))+
+  labs(title = &quot;Perception of NYC schools quality (survey responses)&quot;,
+       y=&quot;Average rating&quot;,
+       x=&quot;Respondent&quot;)+
+  theme(plot.title = element_text(hjust = 0.5))</code></pre>
+<center>
+<iframe src="images/survey.html" width="85%" height="450px">
+</iframe>
+</center>
+<p><br><br> Overall, parents seem to rate NYC schools the highest while students (not surprisingly 😄) are rating the schools lowest. Teachers show the most broad rating of NYC schools.</p>
+</div>
+<div id="survey-responses-on-quality-of-nyc-schools" class="section level4">
+<h4><strong>Survey responses on quality of NYC schools</strong></h4>
+<pre class="r"><code>#Pivot table longer to establish individual rating per question type
+que_score&lt;-combined%&gt;%
+  pivot_longer(cols = c(saf_p_11:aca_s_11),
+               names_to=&quot;questions&quot;,
+               values_to=&quot;rating&quot;)
+
+#Create variables out of the pivoted column
+que_score &lt;- que_score %&gt;%
+  mutate(respondent = str_sub(questions, 4, 6)) %&gt;%   
+  mutate(question = str_sub(questions, 1, 3))
+
+
+que_score &lt;- que_score%&gt;%
+  mutate(respondent = ifelse(respondent  == &quot;_p_&quot;, &quot;parent&quot;, 
+                                ifelse(respondent  == &quot;_t_&quot;, &quot;teacher&quot;,
+                                       ifelse(respondent  == &quot;_s_&quot;, &quot;student&quot;, 
+                                              ifelse(respondent  == &quot;_to&quot;, &quot;total&quot;, &quot;NA&quot;)))))
+
+
+#Boxplot to see if there appear to be differences in how the three groups of responders (parents, students, and teachers) answered the four questions. 
+
+que_score&lt;-as.data.frame(que_score)
+
+fig6&lt;-plot_ly(data = que_score, x=~question, y =~rating, color =~respondent, 
+        type = &quot;box&quot;) %&gt;% 
+         layout(boxmode = &quot;group&quot;, title=&quot;NYC School quality perception survey questions and responses&quot;,
+         xaxis = list(title=&#39;survey questions&#39;,
+                      ticktext = list(&quot;Academic \nExpectations&quot;, &quot;Communication&quot;, &quot;Engagement&quot;, &quot;Safety and \nRespect&quot;), 
+      tickvals = list(&quot;aca&quot;,&quot;com&quot;,&quot;eng&quot;,&quot;saf&quot;), 
+         yaxis = list(title=&#39;Percentage&#39;)))</code></pre>
+<center>
+<iframe src="images/response.html" width="80%" height="450px">
+</iframe>
+</center>
+<p><b><br></p>
+<p>Looking on how individual groups responded, the best rating was for <strong>safety and respect</strong> by parent respondents and the lowest was for <strong>communication</strong> by student respondents.</p>
+</div>
+</div>
 </div>
 
 
