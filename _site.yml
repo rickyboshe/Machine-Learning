@@ -2,6 +2,8 @@ name: "Fredrick Boshe"
 navbar:
   title: "Fredrick Boshe"
   left:
-    - text: "Projects"
+    - text: "NYC Schools"
       href: index.html
+    - text: "USA Seafood"
+      href: Fisheries.html
 output_dir: "docs"
