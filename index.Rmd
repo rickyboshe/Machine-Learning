@@ -1,10 +1,11 @@
 ---
-title: "NYC Schools Survey Project"
-author: "Fredrick Boshe"
-date: "30/03/2021"
+title: ""
 output:
-  github_document: default
-  rmarkdown::github_document: default
+  html_document:
+    collapsed: false
+    number_sections: false
+    toc_depth: 1
+    #code_folding: hide
 ---
 
 # An analysis of a surveyed perception of New York City school quality
@@ -130,7 +131,7 @@ fig1<-combined_boro_longer%>%ggplot(aes(x=boro, y=avg_sat_score, fill=boro))+
 ```
 
 <center>
-```{r include=TRUE, echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.align= "center", fig.width=7, fig.height=6}
+```{r include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.align= "center", fig.width=7, fig.height=6}
 fig1<-ggplotly(fig1)
 fig1<-hide_legend(fig1)
 fig1
