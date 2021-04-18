@@ -38,6 +38,15 @@ devtools::install_github("hadley/emo")
 
 ```
 
+
+```{r sys, include=FALSE}
+
+Sys.setenv("plotly_username"="rickymarvel")
+Sys.setenv("plotly_api_key"="RrlUUhrCU8EIF2f840Eb")
+
+```
+
+
 ### Import and preview data
 
 ```{r Data Import, include=TRUE, results='hide', message=FALSE, warning=FALSE }
@@ -121,20 +130,24 @@ combined_boro_longer<-combined_boro%>%
 #Plot Performance disparity between Boroughs
 fig1<-combined_boro_longer%>%ggplot(aes(x=boro, y=avg_sat_score, fill=boro))+
   geom_boxplot()+
+  theme_minimal()+
   labs(title = "Average school performance by Borough in NYC (2011)",
        y="Average SAT Score",
        x="Borough",
        fill="Borough")+
-  theme(plot.title = element_text(hjust = 0.5))+
-  theme_minimal()
+  theme(plot.title = element_text(hjust = 0.5, size = 12, face="bold"),
+        legend.position="none")
+  
 
 ```
 
 <center>
-```{r include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.align= "center", fig.width=7, fig.height=6}
-fig1<-ggplotly(fig1)
-fig1<-hide_legend(fig1)
+```{r include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.align= "center", out.width='100%', out.height='100%'}
+
+fig1<-ggplotly(fig1)#%>% config(responsive=TRUE, displayModeBar = FALSE)
+#api_create(fig1, filename = "Average school performance by Borough in NYC (2011)")
 fig1
+
 ```
 </center>
 
@@ -193,7 +206,7 @@ rownames(cor_mat)<-c("Avg_SAT_score", "% receiving food discount",
 
 ####  **How racial diversity relates to school performance** 
 
-```{r plot, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.align= "center", fig.width=7.5, fig.height=6}
+```{r plot, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.align= "center", out.width='100%', out.height='100%'}
 
 #Relationship between school performance and their racial diversity
 race.labs<-c("Asian", "Black", "Hispanic", "White")
@@ -202,6 +215,7 @@ names(race.labs)<-c("asian_per", "black_per", "hispanic_per",
 
 fig2<-combined_race_longer%>%ggplot(aes(x=percent, y=avg_sat_score, color=race))+
   geom_point()+
+  theme_minimal()+
   labs(title="Relationship between SAT scores and racial composition of \nschools in NYC",
        x= "Percentage composition",
        y= "Average SAT score")+
@@ -210,10 +224,13 @@ fig2<-combined_race_longer%>%ggplot(aes(x=percent, y=avg_sat_score, color=race))
     values = c("Darkorange", "DarkGreen", "DarkBlue", "Purple"),
     labels=c("Asian", "Black", "Hispanic", "White")
   )+
-  theme(plot.title = element_text(hjust = 0.5))+
-  theme_minimal()+
-  facet_wrap(~race, labeller = labeller(race=race.labs))
+  theme(plot.title = element_text(hjust = 0.5,face="bold", size=12),
+        legend.position="none")+
+    facet_wrap(~race, labeller = labeller(race=race.labs))
 
+
+fig2<-ggplotly(fig2)#%>%config(responsive=TRUE, displayModeBar = FALSE)
+#api_create(fig2, filename = "Relationship between SAT scores and racial composition of schools in NYC")
 fig2
 
 ```
@@ -225,7 +242,7 @@ Schools in boroughs like Staten Island and Manhattan would have more resources a
 
 ####  **How schools with special programs fair in academic performance** 
 
-```{r perform, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.align= "center", fig.width=8, fig.height=5.5}
+```{r perform, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 
 #Trend of SAT scores with the type of program available for students
 prog.labs<-c("Learning to speak English", "Receiving lunch discount",
@@ -234,25 +251,29 @@ names(prog.labs)<-c("ell_percent","frl_percent", "sped_percent")
 
 fig3<-combined_type_longer%>%ggplot(aes(x=percent, y=avg_sat_score, color=`Type of program`))+
   geom_point()+
-  labs(title="Relationship between SAT scores and socioeconomic factors",
+  theme_minimal()+
+  labs(title="Relationship between SAT scores and socio-economic factors",
        x= "Percentage composition",
-       y= "Average SAT score")+
+       y= "Average SAT score\n")+
   scale_color_manual(
     name="Student",
     values = c("maroon", "forestgreen", "chocolate"),
     labels=c("Receiving lunch \ndiscount", "Learning to speak \nEnglish", "Receiving specialized \nteaching")
   )+
-  theme(plot.title = element_text(hjust = 0.5))+
-  theme_minimal()+
+  theme(plot.title = element_text(hjust = 0.5, face="bold"),
+        legend.position="none")+
   facet_wrap(~`Type of program`, labeller = labeller(`Type of program`=prog.labs))
+
 
 ```
 
 <center>
-```{r include=TRUE, echo=FALSE, results='hide', message=FALSE, warning=FALSE, fig.align= "center", fig.width=7, fig.height=6}
-fig3<-ggplotly(fig3)
-fig3<-hide_legend(fig3)
+```{r include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.align= "center", out.width='100%', out.height='100%'}
+
+fig3<-ggplotly(fig3)#%>%config(responsive=TRUE, displayModeBar = FALSE)
+#api_create(fig3, filename = "Relationship between SAT scores and socio-economic factors")
 fig3
+
 ```
 </center>
 
@@ -263,7 +284,7 @@ The most significant observation is how drastically school performance drops wit
 An increase in the share of students learning to speak English is also related to lower academic performance for the school. Learning to speak English can be an indicator of share of students with a lower economic migrant background. 
 <br><br>
 
-```{r programs, echo=FALSE, fig.height= 7.5, fig.width= 10, fig.align="center", message=FALSE, warning=FALSE}
+```{r programs, echo=FALSE, out.height='100%', out.width='100%', fig.align="center", message=FALSE, warning=FALSE}
 
 combined2<-combined%>%
   drop_na(boro)%>%
@@ -309,7 +330,7 @@ plot1<-plotdata%>%
        x="",
        y="Percent")+
   scale_fill_manual(name="Student",
-    values = c("navyblue", "red3", "sienna4", "forestgreen"),
+    values = c("dodgerblue2", "firebrick2", "tan3", "limegreen"),
     labels=c("Receiving lunch \ndiscount", "Learning to speak \nEnglish", "Receiving specialized \nteaching"))
 
 #Plotly to make the chart more interactive
@@ -319,9 +340,10 @@ plot1<- ggplotly(plot1)%>% add_annotations( text="Program",
                                             y=0.9, yanchor="bottom",
                                             legendtitle=TRUE, showarrow=FALSE )%>%
   layout(legend=list(y=0.9, yanchor="top"),xaxis=list(tickangle=-45))%>%
-  style(hoverinfo = 'none')
-plot1
+  style(hoverinfo = 'none')#%>%config(responsive=TRUE, displayModeBar = FALSE)
 
+#api_create(plot1, filename = "Percentage of schools with at least a third of students in special programs")
+plot1
 ```
 
 
@@ -330,7 +352,7 @@ Creating an arbitrary cut-off of 30%, i looked into the share of schools in each
 This gap also translates to average SAT scores as shown in an earlier chart between the boroughs. 
 
 
-```{r perfrom2, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.align= "center", fig.width=7, fig.height=6}
+```{r perfrom2, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
 p.mat<-cor_pmat(cor_mat)#pvalues
 cor_tib<-cor_mat%>%
   as_tibble(rownames="variable")#A tibble for easier viewing
@@ -346,15 +368,18 @@ strong_cor_mat<-as.matrix(strong_cor)
 
 #Plot matrix table to see strength of relationships
 fig4 <- ggcorrplot(
-  cor_mat, hc.order = TRUE, type = "lower", title = "Correlation matrix between school \nperformance and demographics", outline.col = "white",
-  p.mat = p.mat)
+  cor_mat, hc.order = TRUE, type = "lower", title = "Correlation matrix between school \nperformance and demographics", outline.col = "white", p.mat = p.mat)+
+  theme(plot.title = element_text(size=12, face="bold", hjust = 0.5))
 
 ```
 
 <center>
-```{r include=TRUE, echo=FALSE,fig.align= "center",warning=FALSE, fig.width=8, fig.height=6}
-fig4<-ggplotly(fig4)
+```{r include=TRUE, echo=FALSE,fig.align= "center", warning=FALSE, out.width='100%', out.height='100%'}
+
+fig4<-ggplotly(fig4)#%>%config(responsive=TRUE, displayModeBar = FALSE)
+#api_create(fig4, filename = "Correlation between school \nperformance and demographics")
 fig4
+
 ```
 </center>
 
@@ -367,7 +392,7 @@ Overall, the strongest positive relationships are among the perceptions of NYC s
 
 ####  **How teachers, students and parents rate NYC schools** 
 
-```{r rating, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.align= "center", fig.width=7, fig.height=5}
+```{r rating, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.align= "center", out.width='100%', out.height='100%', fig.height=5}
 #establish average scores per respondent group
 
 survey_score<-combined%>%
@@ -385,12 +410,16 @@ survey_score_longer<-survey_score%>%
 #Plot the spread of the respondents average scores
 fig5<-survey_score_longer%>%ggplot(aes(x=respondent, y=avg_score, fill=respondent))+
   geom_boxplot(show.legend = FALSE)+
+  theme_minimal()+
   scale_x_discrete(labels=c("parent_score_avg" = "Parent", "student_score_avg" = "Student","teacher_score_avg" = "Teacher"))+
   labs(title = "Perception of NYC schools quality (survey responses)",
-       y="Average rating",
+       y="Rating",
        x="Respondent")+
-  theme(plot.title = element_text(hjust = 0.5))+
-  theme_minimal()
+  theme(plot.title = element_text(hjust = 0.5, size=12, face="bold"),
+        legend.position="none")
+
+fig5<-ggplotly(fig5)#%>%config(responsive=TRUE, displayModeBar = FALSE)
+#api_create(fig5, filename = "Perception of NYC schools quality (survey responses)")
 fig5
 ```
 
@@ -401,13 +430,13 @@ Overall, parents seem to rate NYC schools the highest while students (not surpri
 
 ####  **Survey responses on quality of NYC schools**
 
-```{r questions, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.align= "center", fig.width=8, fig.height=6}
+```{r questions, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.align= "center", out.width='100%', out.height='100%'}
 
 #Pivot table longer to establish individual rating per question type
 que_score<-combined%>%
   pivot_longer(cols = c(saf_p_11:aca_s_11),
                names_to="questions",
-               values_to="rating")
+               values_to="Rating")
 
 #Create variables out of the pivoted column
 que_score <- que_score %>%
@@ -426,14 +455,15 @@ que_score <- que_score%>%
 
 que_score<-as.data.frame(que_score)
 
-fig6<-plot_ly(data = que_score, x=~question, y =~rating, color =~respondent, 
+fig6<-plot_ly(data = que_score, x=~question, y =~Rating, color =~respondent, 
         type = "box") %>% 
          layout(boxmode = "group", title="<b>NYC School quality perception survey questions and responses<b>",
          xaxis = list(title='survey questions',
                       ticktext = list("Academic \nExpectations", "Communication", "Engagement", "Safety and \nRespect"), 
       tickvals = list("aca","com","eng","saf"), 
-         yaxis = list(title='Percentage')))
+         yaxis = list(title='Percentage')))#%>%config(responsive=TRUE, displayModeBar = FALSE)
 
+#api_create(fig6, filename = "NYC School quality perception survey questions and responses")
 fig6
 
 ```
@@ -446,7 +476,7 @@ Interesting to note that across each borough, the responses to the survey were s
 
 
 
-```{r boro, include=TRUE, echo=FALSE, warning=FALSE, message=FALSE, fig.align= "center", fig.width=7, fig.height=5}
+```{r boro, include=TRUE, echo=FALSE, warning=FALSE, message=FALSE, fig.align= "center", out.width='100%', out.height='100%'}
 #establish average scores per respondent group
 
 survey_score<-combined%>%
@@ -466,21 +496,21 @@ boro<-survey_score_longer%>%
   drop_na(boro)%>%
   ggplot(aes(x=boro, y=avg_score, fill=boro))+
   geom_boxplot(show.legend = FALSE)+
-  labs(title = "<b>Perception of NYC schools quality \nby Borough (survey responses)</b>",
-       y="Average rating",
-       x="Borough")+
   theme_minimal()+
-  theme(plot.title = element_text(hjust = 0.5))
+  labs(title = "<b>Perception of NYC schools quality \nby Borough (survey responses)</b>",
+       y="Rating",
+       x="Borough")+
+  theme(plot.title = element_text(hjust = 0.5, size=12, face="bold"),
+        legend.position="none")
   
-
-boro<-ggplotly(boro)
-boro<-hide_legend(boro)
+boro<-ggplotly(boro)#%>%config(boro, displayModeBar = FALSE)
+#api_create(boro, filename = "Perception of NYC schools quality by Borough (survey responses)")
 boro
 ```
 
 This proves what we saw in the correlation matrix, that how respondents rated schools do not have a strong correlation nor a statistically significant one with actual school performance. But how respondents rated schools do closely correlate to each other. 
 
-This could mean there is a perception bubble amongst teachers, studnets and parents. Sadly, it does not match reality. 
+This could mean there is a perception bubble amongst teachers, students and parents. Sadly, it does not match reality. 
 
 
 Perceptions are a funny thing.
