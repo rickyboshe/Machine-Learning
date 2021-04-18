@@ -131,7 +131,7 @@ combined_boro_longer<-combined_boro%>%
 fig1<-combined_boro_longer%>%ggplot(aes(x=boro, y=avg_sat_score, fill=boro))+
   geom_boxplot()+
   theme_minimal()+
-  labs(title = "Average school performance by Borough in NYC (2011)",
+  labs(title = "Average school performance by \nBorough in NYC (2011)",
        y="Average SAT Score",
        x="Borough",
        fill="Borough")+
@@ -216,7 +216,7 @@ names(race.labs)<-c("asian_per", "black_per", "hispanic_per",
 fig2<-combined_race_longer%>%ggplot(aes(x=percent, y=avg_sat_score, color=race))+
   geom_point()+
   theme_minimal()+
-  labs(title="Relationship between SAT scores and racial composition of \nschools in NYC",
+  labs(title="Relationship between SAT scores & \nracial composition of schools",
        x= "Percentage composition",
        y= "Average SAT score")+
   scale_color_manual(
@@ -412,7 +412,7 @@ fig5<-survey_score_longer%>%ggplot(aes(x=respondent, y=avg_score, fill=responden
   geom_boxplot(show.legend = FALSE)+
   theme_minimal()+
   scale_x_discrete(labels=c("parent_score_avg" = "Parent", "student_score_avg" = "Student","teacher_score_avg" = "Teacher"))+
-  labs(title = "Perception of NYC schools quality (survey responses)",
+  labs(title = "Perception of NYC schools quality \n(survey responses)",
        y="Rating",
        x="Respondent")+
   theme(plot.title = element_text(hjust = 0.5, size=12, face="bold"),
