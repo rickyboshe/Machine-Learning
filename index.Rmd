@@ -183,22 +183,19 @@ combined_type_longer<-combined%>%
 #A correlation matrix for the variables we are interested in
 cor_mat<-combined%>%
   select(avg_sat_score,frl_percent, ell_percent, sped_percent,
-         ends_with("_per"), contains("tot_11"))%>%
+         ends_with("_per"))%>%
   select(-female_per)%>%
   cor(use = "pairwise.complete.obs")
 
 colnames(cor_mat)<-c("Avg_SAT_score", "% receiving food discount",
                      "% learning english","% receiving specialized teaching",
                      "% Asian", "% Black", "% Hispanic", "% White",
-                     "% male", "Safety", "Communication", "Engagement",
-                     "Academic")
+                     "% male")
 
 rownames(cor_mat)<-c("Avg_SAT_score", "% receiving food discount",
                      "% learning english","% receiving specialized teaching",
                      "% Asian", "% Black", "% Hispanic", "% White",
-                     "% male", "Safety", "Communication", "Engagement",
-                     "Academic")
-
+                     "% male")
 
 
 ```
@@ -224,7 +221,12 @@ fig2<-combined_race_longer%>%ggplot(aes(x=percent, y=avg_sat_score, color=race))
     values = c("Darkorange", "DarkGreen", "DarkBlue", "Purple"),
     labels=c("Asian", "Black", "Hispanic", "White")
   )+
-  theme(plot.title = element_text(hjust = 0.5,face="bold", size=12),
+  theme(plot.title = element_text(hjust = 0.5,face="bold", size=12,
+                                  margin = margin(t = 0, r = 0, b = 10, l = 0)),
+        axis.title.y = element_text(margin = margin(t = 0, r = 16, 
+                                                    b = 0, l = 0)),
+        axis.title.x = element_text(margin = margin(t = 15, r = 0, 
+                                                    b = 0, l = 0)),
         legend.position="none")+
     facet_wrap(~race, labeller = labeller(race=race.labs))
 
@@ -260,7 +262,12 @@ fig3<-combined_type_longer%>%ggplot(aes(x=percent, y=avg_sat_score, color=`Type 
     values = c("maroon", "forestgreen", "chocolate"),
     labels=c("Receiving lunch \ndiscount", "Learning to speak \nEnglish", "Receiving specialized \nteaching")
   )+
-  theme(plot.title = element_text(hjust = 0.5, face="bold"),
+  theme(plot.title = element_text(hjust = 0.5, face="bold",
+                                  margin = margin(t = 0, r = 0, b = 10, l = 0)),
+        axis.title.y = element_text(margin = margin(t = 0, r = 8, 
+                                                    b = 0, l = 0)),
+        axis.title.x = element_text(margin = margin(t = 15, r = 0, 
+                                                    b = 0, l = 0)),
         legend.position="none")+
   facet_wrap(~`Type of program`, labeller = labeller(`Type of program`=prog.labs))
 
@@ -318,14 +325,19 @@ plot1<-plotdata%>%
   ggplot(aes(x=boro, y=pct, fill=cat))+
   geom_bar(stat = "identity", position = "fill")+
   theme_minimal()+
-  theme(plot.title = element_text(color="black", size=14, face="bold",hjust = 0.5),
+  theme(plot.title = element_text(color="black", size=12, face="bold",hjust = 0.5,
+                                  margin = margin(t = 0, r = 0, b = 10, l = 0)),
         axis.ticks = element_blank(),
         legend.title = element_blank(),
-        axis.title.x = element_text(color="black", size=12, face="bold"),
-        axis.title.y = element_text(color="black", size=12, face="bold"))+
+        axis.title.x = element_text(color="black", size=12, face="bold",
+                                    margin = margin(t = 0, r = 0, 
+                                                    b = 10, l = 0)),
+        axis.title.y = element_text(color="black", size=12, 
+                                    margin = margin(t = 0, r = 10, 
+                                                    b = 0, l = 0)))+
   scale_y_continuous(breaks = seq(0, 1, .2),label = percent)+
-  geom_text(aes(label = lbl), size = 3, 
-            position = position_stack(vjust = 0.5))+
+  #geom_text(aes(label = lbl), size = 1.5, 
+            #position = position_stack(vjust = 0.5))+
   labs(title = "Percentage of schools with at least a third of \nstudents in special programs",
        x="",
        y="Percent")+
@@ -415,7 +427,12 @@ fig5<-survey_score_longer%>%ggplot(aes(x=respondent, y=avg_score, fill=responden
   labs(title = "Perception of NYC schools quality \n(survey responses)",
        y="Rating",
        x="Respondent")+
-  theme(plot.title = element_text(hjust = 0.5, size=12, face="bold"),
+  theme(plot.title = element_text(hjust = 0.5, size=12, face="bold",
+                                  margin = margin(t = 0, r = 0, b = 10, l = 0)),
+        axis.title.y = element_text(margin = margin(t = 0, r = 10, 
+                                                    b = 0, l = 0)),
+        axis.title.x = element_text(margin = margin(t = 0, r = 0, 
+                                                    b = 10, l = 0)),
         legend.position="none")
 
 fig5<-ggplotly(fig5)#%>%config(responsive=TRUE, displayModeBar = FALSE)
