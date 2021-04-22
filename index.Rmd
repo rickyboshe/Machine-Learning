@@ -11,6 +11,7 @@ output:
 # NYC school’s academic performance vs public perception
 </center>
 
+
 ## A Data Visualisation Approach
 
 This project looks into the academic performance of high schools in New York (2011) with additional demographic and socio-economic indicators. As i explore how performance was influenced with such indicators, i will also include a survey on the perceptions of students, teachers and parents on the quality of New York City schools.
@@ -193,13 +194,13 @@ cor_mat<-combined%>%
   select(-female_per)%>%
   cor(use = "pairwise.complete.obs")
 
-colnames(cor_mat)<-c("Avg_SAT_score", "% receiving food discount",
-                     "% learning english","% receiving specialized teaching",
+colnames(cor_mat)<-c("Avg_SAT_score", "% food dis",
+                     "% learning eng","% Sped",
                      "% Asian", "% Black", "% Hispanic", "% White",
                      "% male")
 
-rownames(cor_mat)<-c("Avg_SAT_score", "% receiving food discount",
-                     "% learning english","% receiving specialized teaching",
+rownames(cor_mat)<-c("Avg_SAT_score", "% food dis",
+                     "% learning eng","% Sped",
                      "% Asian", "% Black", "% Hispanic", "% White",
                      "% male")
 
