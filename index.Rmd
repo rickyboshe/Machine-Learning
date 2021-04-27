@@ -1,14 +1,14 @@
 ---
-title: ""
+title: "School"
 output:
   html_document:
     collapsed: false
     number_sections: false
     toc_depth: 1
-    #code_folding: hide
+    code_folding: hide
 ---
 <center>
-# NYC school’s academic performance vs public perception
+# Academic performance vs public perception
 </center>
 
 
