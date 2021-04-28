@@ -202,7 +202,8 @@ fish.df<-fish.df%>%
 
 #Fiber
 ##This column has one value in mg and the rest are in g
-unique(fish.df$Fiber..Total.Dietary)
+#unique(fish.df$Fiber..Total.Dietary)
+##This column has one value in mg and the rest are in g. Convert the mg value to g
 fish.df$Fiber..Total.Dietary<-parse_number(fish.df$Fiber..Total.Dietary)
 
 ##convert the mg value to g
@@ -225,7 +226,7 @@ fish.df<-fish.df%>%
 
 #Selenium
 ##Some values are in percentage of daily intake and some in mcg
-unique(fish.df$Selenium)
+#unique(fish.df$Selenium)
 fish.df$Selenium <-parse_number(fish.df$Selenium) 
 fish.df$Selenium<-ifelse(fish.df$Selenium==160, 55*1.6, fish.df$Selenium) #55 mcg is the USA daily intake for adults and children above 14.
 
@@ -266,49 +267,39 @@ fish.df<-fish.df%>%
 ### **Analysis**
 #### Regional Fishing
 
-```{r region, include=TRUE, out.width='100%', out.height='100%', fig.align='center'}
-fig1<-fish.df%>%ggplot(aes(x=noaa.fisheries.region, 
-                           fill=noaa.fisheries.region))+
-  geom_bar()+
+```{r region, include=TRUE, out.width='100%', out.height='100%', fig.align='center', warning=FALSE, message=FALSE}
+fig1<-fish.df%>%
+  count(noaa.fisheries.region)%>%
+  ggplot(aes(x=reorder(noaa.fisheries.region, n), y = n, 
+             fill=noaa.fisheries.region))+
+  geom_bar(stat = "identity")+
   theme_minimal()+
   theme(plot.title = element_text(color="black", size=14, 
                                   face="bold", hjust = 0.5),
-        axis.text.x = element_blank(),
         axis.ticks = element_blank(),
-        legend.title = element_blank(),
         axis.title.x = element_text(color="black", size=12),
-        axis.title.y = element_text(color="black", size=12))+
+        axis.title.y = element_blank(),
+        legend.position = "none")+
   scale_y_continuous(expand = c(0, 0))+
+  coord_flip() +
+  geom_col(alpha = 0.8, width = 0.85) +
   labs(title = "Distribution of fish species within \nNOAA fisheries regions",
        x="Region",
-       y="No. of Species")
+       y="Number of Species")
 
 mrg <- list(l = 10, r = 40,
-          b = 15, t = 100,
+          b = 15, t = 70,
           pad = 0)
 
 #ggplotly allows for an interactive chart
-fig1<-ggplotly(fig1)%>%layout(margin=mrg)%>%add_annotations(text="NOAA Fishery Region", 
-                                         xref="paper", yref="paper",
-                                         x=1.02, xanchor="left",
-                                         y=0.9, yanchor="bottom", 
-                                         legendtitle=TRUE, showarrow=FALSE)%>%
-  layout(legend=list(y=0.9, yanchor="top"))
+fig1<-ggplotly(fig1)%>%
+  layout(margin=mrg)%>%
+  style(hoverinfo = 'none')
+
 fig1
 
 ```
 
-```{r fig1, include=FALSE, out.width='100%', out.height='100%', results="hide", fig.align="center"}
-#Plotly to make the chart more interactive
-fig1<- ggplotly(fig1)%>% add_annotations(text="NOAA Fishery Region", 
-                                         xref="paper", yref="paper",
-                                         x=1.02, xanchor="left",
-                                         y=0.9, yanchor="bottom", 
-                                         legendtitle=TRUE, showarrow=FALSE)%>%
-  layout(legend=list(y=0.9, yanchor="top"))
-fig1
-
-```
 <br></br>
 The most species are found in the Greater Atlantic area while the least are found in the Pacific Island fishery region.
 
@@ -331,15 +322,16 @@ fig2<-plotdata%>%
   ggplot(aes(x=noaa.fisheries.region, y=pct, fill=fishing_rate))+
   geom_bar(stat = "identity", position = "fill")+
   theme_minimal()+
-  theme(plot.title = element_text(color="black", size=14, 
+  theme(plot.title = element_text(color="black", size=12, 
                                   face="bold", hjust = 0.5),
         axis.ticks = element_blank(),
         legend.title = element_blank(),
-        axis.title.x = element_text(color="black", size=12, face="bold"),
+        axis.title.x = element_text(color="black", size=12),
         axis.title.y = element_text(color="black", size=12))+
   scale_y_continuous(breaks = seq(0, 1, .2),label = percent)+
   geom_text(aes(label = lbl), size = 3, 
             position = position_stack(vjust = 0.5))+
+  geom_col(alpha = 0.8, width = 0.85) +
   labs(title = "Fishing Rate by Fishing Region",
        x="",
        y="Percent")
@@ -472,7 +464,7 @@ names(nut.labs)<-c("fat_RDA", "s.fat_RDA", "carbs_RDA", "sugars_RDA", "protein_R
 fig6<-fish_longer%>%ggplot(aes(x=calories, y=percent, color=nutrient, group=species))+
   geom_point(shape=1)+
   theme_minimal()+
-  theme(plot.title = element_text(color="black", size=14, 
+  theme(plot.title = element_text(color="black", size=12, 
                                   face="bold",hjust = 0.5),
         legend.title = element_blank(),
         axis.title.x = element_text(color="black", size=12),
@@ -531,7 +523,7 @@ strong_cor<-cor_tib%>%
 #Plot matrix table to see strength of relationships
 fig7 <- ggcorrplot(
   cor_mat, hc.order = TRUE, type = "lower", title = "Correlation: Calories and Fish Nutrients", outline.col = "white", p.mat = p.mat)+
-  theme(plot.title = element_text(color="black", size=14, face="bold", hjust = 0.5))
+  theme(plot.title = element_text(color="black", size=12, face="bold", hjust = 0.5))
 
 fig7
 
@@ -761,11 +753,11 @@ Import the trimmed data and finish manipulating the values. Finally subset a dat
 The goal is to have comparable values. I selected fruits and vegetables with the highest calories. This will be the same with the fish species selected. 
  
 ```{r vegetables, include=FALSE}
-fruits<-read_csv("C:/Users/ricky/Documents/GitHub/NYC-web/docs/Fruits.csv")
-vegetables<-read_csv("C:/Users/ricky/Documents/GitHub/NYC-web/docs/Vegetables.csv")
-beef<-read_csv("C:/Users/ricky/Documents/GitHub/NYC-web/docs/Beef.csv")
-pork<-read_csv("C:/Users/ricky/Documents/GitHub/NYC-web/docs/Pork.csv")
-poultry<-read_csv("C:/Users/ricky/Documents/GitHub/NYC-web/docs/Poultry.csv")
+fruits<-read_csv("C:/Users/ricky/Documents/GitHub/Fisheries/Fisheries/Fruits.csv")
+vegetables<-read_csv("C:/Users/ricky/Documents/GitHub/Fisheries/Fisheries/Vegetables.csv")
+beef<-read_csv("C:/Users/ricky/Documents/GitHub/Fisheries/Fisheries/Beef.csv")
+pork<-read_csv("C:/Users/ricky/Documents/GitHub/Fisheries/Fisheries/Pork.csv")
+poultry<-read_csv("C:/Users/ricky/Documents/GitHub/Fisheries/Fisheries/Poultry.csv")
 
 fruits<-fruits%>%
   select(-20:-24)
