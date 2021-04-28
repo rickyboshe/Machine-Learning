@@ -1,5 +1,5 @@
 ---
-title: "School"
+title: "Schools"
 output:
   html_document:
     collapsed: false
@@ -8,15 +8,12 @@ output:
     code_folding: hide
 ---
 <center>
-# Academic performance vs public perception
+#  Academic performance `r emo::ji("mortar_board")` vs Public perception
 </center>
-
-
-## A Data Visualisation Approach
 
 This project looks into the academic performance of high schools in New York (2011) with additional demographic and socio-economic indicators. As i explore how performance was influenced with such indicators, i will also include a survey on the perceptions of students, teachers and parents on the quality of New York City schools.
 
-I used data visualisation to explore:
+I used data visualization to explore:
 
 1. What is the relationship between demography and school performance in NYC? 
 **Goal:** Observe any differences in academic performance across NYC schools’ demographics.
@@ -29,9 +26,7 @@ I used data visualisation to explore:
 The survey data can be found [here](https://data.cityofnewyork.us/Education/2011-NYC-School-Survey/mnz3-dyi8) while the performance and demographics data can be found [here](https://data.world/dataquest/nyc-schools-data/workspace/file?filename=combined.csv).
 
 
-### Load relevant packages
-
-```{r setup, include=TRUE, results='hide', message=FALSE, warning=FALSE}
+```{r setup, include=FALSE, results='hide', message=FALSE, warning=FALSE}
 
 #Loading packages
 library(tidyverse)
@@ -55,7 +50,7 @@ Sys.setenv("plotly_api_key"="RrlUUhrCU8EIF2f840Eb")
 ```
 
 
-### Import and preview data
+#### **Import and preview data**
 
 ```{r Data Import, include=TRUE, results='hide', message=FALSE, warning=FALSE }
 
@@ -85,7 +80,7 @@ The surveyed groups were:
 - Students
 - Total (The average of parent, teacher, and student scores)
 
-### **Data cleaning and manipulation**
+#### **Data cleaning and manipulation**
 
 ```{r cleaning,include=TRUE, results='hide', message=FALSE, warning=FALSE }
 
@@ -115,10 +110,10 @@ combined<-combined%>%
 Using right_join() helps keep all the survey data that corresponds to matching demographic and school performance data. 
 
 We analyze how perception relates to demographic and school performance via a correlation matrix.
+<br></br>
 
-### Relationship Analysis
-
-####  **Disparity in performance between NYC Boroughs**
+### **Relationship Analysis**
+####  Disparity in performance between NYC Boroughs
 While SATs have been [questioned](https://www.washingtonpost.com/news/answer-sheet/wp/2017/04/19/34-problems-with-standardized-tests/) on their validity and reliability to accurately measure students, I believe they can be used as a metric to compare high schools.
 
 ```{r analysis1, include=TRUE, results='hide', message=FALSE, warning=FALSE, fig.align= "center"}
@@ -170,11 +165,11 @@ Overall, school performance in New York City is indeed split along the demograph
 
 <br><br>
 
-<center>
-###  **Trend of NYC school performance with racial diversity of schools**
-</center>
 
-```{r analysis, include=FALSE, results='hide', message=FALSE, warning=FALSE, fig.align= "center", fig.width=7, fig.height=6}
+####  Trend of NYC school performance with racial diversity of schools
+
+Pivot longer the dataset to ensure the diversity indicators are witin a single column and their values in a subsequent column. This will help during the plotting excercise.
+```{r analysis, include=TRUE, results='hide', message=FALSE, warning=FALSE, fig.align= "center", fig.width=7, fig.height=6}
 
 #Pivot table longer to allow plotting of different races on the same plot
 combined_race_longer<-combined%>%
@@ -208,8 +203,9 @@ rownames(cor_mat)<-c("Avg_SAT_score", "% food dis",
 ```
 
 
-####  **How racial diversity relates to school performance** 
+####  How racial diversity relates to school performance 
 
+Renaming of indicators to help improve the aesthetics of the chart. 
 ```{r plot, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.align= "center", out.width='100%', out.height='100%'}
 
 #Relationship between school performance and their racial diversity
@@ -222,7 +218,7 @@ fig2<-combined_race_longer%>%ggplot(aes(x=percent, y=avg_sat_score, color=race))
   theme_minimal()+
   labs(title="Relationship between SAT scores & \nracial composition of schools",
        x= "Percentage composition",
-       y= "")+
+       y= "Average SAT score")+
   scale_color_manual(
     name="Race",
     values = c("Darkorange", "DarkGreen", "DarkBlue", "Purple"),
@@ -238,15 +234,21 @@ fig2<-combined_race_longer%>%ggplot(aes(x=percent, y=avg_sat_score, color=race))
     facet_wrap(~race, labeller = labeller(race=race.labs))
 
 
-fig2<-ggplotly(fig2)%>%layout(margin = list(l = 70, r = 30, b = 20, 
-                                            t = 80),
-           yaxis = list(title = paste0(c(rep("&nbsp;", 10),
-                                         "Average SAT score",
-                                         rep("&nbsp;", 30),
-                                         rep("\n&nbsp;", 3)),
-                                       collapse = "")))
+fig2<-ggplotly(fig2)
+
+#This helps find out how plotly has listed the annotations
+#str(fig2[['x']][['layout']][['annotations']]) 
+
+#Locates the x position of the yaxis titles
+#fig2[['x']][['layout']][['annotations']][[2]][['x']]
+#fig2[['x']][['layout']][['annotations']][[1]][['y']]
+
+#move the y-axis title more left and x-axis title lower
+fig2[['x']][['layout']][['annotations']][[2]][['x']] <- -0.07
+fig2[['x']][['layout']][['annotations']][[1]][['y']] <- -0.06
+fig2 %>% layout(margin = list(l = 75, t=75))
+
 #api_create(fig2, filename = "Relationship between SAT scores and racial composition of schools in NYC")
-fig2
 
 ```
 
@@ -255,9 +257,9 @@ Schools with a higher proportion of Black and Hispanic have lower SAT scores as 
 
 Schools in boroughs like Staten Island and Manhattan would have more resources and have a higher proportion of White and Asian students as compared to schools in Bronx and Brooklyn. 
 
-####  **How schools with special programs fair in academic performance** 
+####  How schools with special programs fair in academic performance
 
-```{r perform, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
+```{r perform, include=TRUE,  warning=FALSE, message=FALSE, fig.align= "center", out.width='100%', out.height='100%'}
 
 #Trend of SAT scores with the type of program available for students
 prog.labs<-c("Learning to speak English", "Receiving lunch discount",
@@ -269,7 +271,7 @@ fig3<-combined_type_longer%>%ggplot(aes(x=percent, y=avg_sat_score, color=`Type 
   theme_minimal()+
   labs(title="Relationship between SAT scores and socio-economic factors",
        x= "Percentage composition",
-       y= "")+
+       y= "Average SAT score")+
   scale_color_manual(
     name="Student",
     values = c("maroon", "forestgreen", "chocolate"),
@@ -284,25 +286,23 @@ fig3<-combined_type_longer%>%ggplot(aes(x=percent, y=avg_sat_score, color=`Type 
         legend.position="none")+
   facet_wrap(~`Type of program`, labeller = labeller(`Type of program`=prog.labs))
 
+fig3<-ggplotly(fig3)
+               
+#This helps find out how plotly has listed the annotations
+#str(fig3[['x']][['layout']][['annotations']]) 
 
-```
+#Locates the x position of the yaxis titles
+#fig3[['x']][['layout']][['annotations']][[2]][['x']]
+#fig3[['x']][['layout']][['annotations']][[1]][['y']]
 
-<center>
-```{r include=TRUE, echo=FALSE, message=FALSE, warning=FALSE, fig.align= "center", out.width='100%', out.height='100%'}
-
-fig3<-ggplotly(fig3)%>%layout(margin = list(l = 70, r = 30, b = 20, 
-                                            t = 80),
-           yaxis = list(title = paste0(c(rep("&nbsp;", 10),
-                                         "Average SAT score",
-                                         rep("&nbsp;", 8),
-                                         rep("\n&nbsp;", 3)),
-                                       collapse = "")))
+#move the y-axis title more left and x-axis title lower
+fig3[['x']][['layout']][['annotations']][[2]][['x']] <- -0.06
+fig3[['x']][['layout']][['annotations']][[1]][['y']] <- -0.06
+fig3 %>% layout(margin = list(l = 75, t=75))
 
 #api_create(fig3, filename = "Relationship between SAT scores and socio-economic factors")
-fig3
 
 ```
-</center>
 
 
 The most significant observation is how drastically school performance drops with increase in number of students eligible for lunch discount at a school. This is an indication of a school being in a socially and economically disadvantaged location. Such schools rarely have enough resources to help students perform better academically.
@@ -341,7 +341,7 @@ plotdata <- combined2%>%
   mutate(pct = n/sum(n),
          lbl = scales::percent(pct))
 
-plot1<-plotdata%>%
+fig4<-plotdata%>%
   ggplot(aes(x=boro, y=pct, fill=cat))+
   geom_bar(stat = "identity", position = "fill")+
   theme_minimal()+
@@ -356,8 +356,7 @@ plot1<-plotdata%>%
                                     margin = margin(t = 0, r = 10, 
                                                     b = 0, l = 0)))+
   scale_y_continuous(breaks = seq(0, 1, .2),label = percent)+
-  #geom_text(aes(label = lbl), size = 1.5, 
-            #position = position_stack(vjust = 0.5))+
+  geom_col(alpha = 0.8, width = 0.85) +
   labs(title = "Percentage of schools with at least a third of \nstudents in special programs",
        x="",
        y="Percent")+
@@ -366,7 +365,7 @@ plot1<-plotdata%>%
     labels=c("Receiving lunch \ndiscount", "Learning to speak \nEnglish", "Receiving specialized \nteaching"))
 
 #Plotly to make the chart more interactive
-plot1<- ggplotly(plot1)%>% add_annotations( text="Program", 
+fig4<- ggplotly(fig4)%>% add_annotations( text="Program", 
                                             xref="paper", yref="paper",
                                             x=1.02, xanchor="left",
                                             y=0.9, yanchor="bottom",
@@ -374,8 +373,8 @@ plot1<- ggplotly(plot1)%>% add_annotations( text="Program",
   layout(legend=list(y=0.9, yanchor="top"),xaxis=list(tickangle=-45))%>%
   style(hoverinfo = 'none')#%>%config(responsive=TRUE, displayModeBar = FALSE)
 
-#api_create(plot1, filename = "Percentage of schools with at least a third of students in special programs")
-plot1
+#api_create(fig4, filename = "Percentage of schools with at least a third of students in special programs")
+fig4
 ```
 
 
@@ -399,7 +398,7 @@ strong_cor<-cor_tib%>%
 strong_cor_mat<-as.matrix(strong_cor)
 
 #Plot matrix table to see strength of relationships
-fig4 <- ggcorrplot(
+fig5 <- ggcorrplot(
   cor_mat, hc.order = TRUE, type = "lower", title = "Correlation matrix between school \nperformance and demographics", outline.col = "white", p.mat = p.mat)+
   theme(plot.title = element_text(size=12, face="bold", hjust = 0.5))
 
@@ -408,9 +407,9 @@ fig4 <- ggcorrplot(
 <center>
 ```{r include=TRUE, echo=FALSE,fig.align= "center", warning=FALSE, out.width='100%', out.height='100%'}
 
-fig4<-ggplotly(fig4)#%>%config(responsive=TRUE, displayModeBar = FALSE)
-#api_create(fig4, filename = "Correlation between school \nperformance and demographics")
-fig4
+fig5<-ggplotly(fig5)#%>%config(responsive=TRUE, displayModeBar = FALSE)
+#api_create(fig5, filename = "Correlation between school \nperformance and demographics")
+fig5
 
 ```
 </center>
@@ -420,7 +419,7 @@ A correlation analysis shows how strong the relationships between racial diversi
 
 When it comes to demographics, academic performance shows a strong positive correlation with the percentage of white students in a school (r= 0.65). While it has the strongest negative relationship with the percentage of students that are eligible for food discount at a school (r= -0.72).
 
-####  **How teachers, students and parents rate NYC schools** 
+####  How teachers, students and parents rate NYC schools 
 
 ```{r rating, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.align= "center", out.width='100%', out.height='100%', fig.height=5}
 #establish average scores per respondent group
@@ -438,7 +437,7 @@ survey_score_longer<-survey_score%>%
 
 
 #Plot the spread of the respondents average scores
-fig5<-survey_score_longer%>%ggplot(aes(x=respondent, y=avg_score, fill=respondent))+
+fig6<-survey_score_longer%>%ggplot(aes(x=respondent, y=avg_score, fill=respondent))+
   geom_boxplot(show.legend = FALSE)+
   theme_minimal()+
   scale_x_discrete(labels=c("parent_score_avg" = "Parent", "student_score_avg" = "Student","teacher_score_avg" = "Teacher"))+
@@ -453,9 +452,9 @@ fig5<-survey_score_longer%>%ggplot(aes(x=respondent, y=avg_score, fill=responden
                                                     b = 10, l = 0)),
         legend.position="none")
 
-#fig5<-ggplotly(fig5)#%>%config(responsive=TRUE, displayModeBar = FALSE)
-#api_create(fig5, filename = "Perception of NYC schools quality (survey responses)")
-fig5
+#fig6<-ggplotly(fig6)#%>%config(responsive=TRUE, displayModeBar = FALSE)
+#api_create(fig6, filename = "Perception of NYC schools quality (survey responses)")
+fig6
 ```
 
 
@@ -466,7 +465,7 @@ Ratings on school performance across the four benchmarks are really close for ea
 This is an indication of how similar the perceptions of individual groups are amongst themselves.
 
 
-####  **Survey responses on quality of NYC schools**
+####  Survey responses on quality of NYC schools
 
 ```{r questions, include=TRUE, echo=TRUE, warning=FALSE, message=FALSE, fig.align= "center", out.width='100%', out.height='100%'}
 
@@ -493,7 +492,7 @@ que_score <- que_score%>%
 
 que_score<-as.data.frame(que_score)
 
-fig6<-plot_ly(data = que_score, x=~question, y =~Rating, color =~respondent, 
+fig7<-plot_ly(data = que_score, x=~question, y =~Rating, color =~respondent, 
         type = "box") %>% 
          layout(boxmode = "group", title="<b>NYC School quality perception survey questions and responses<b>",
          xaxis = list(title='survey questions',
@@ -501,8 +500,8 @@ fig6<-plot_ly(data = que_score, x=~question, y =~Rating, color =~respondent,
       tickvals = list("aca","com","eng","saf"), 
          yaxis = list(title='Percentage')))#%>%config(responsive=TRUE, displayModeBar = FALSE)
 
-#api_create(fig6, filename = "NYC School quality perception survey questions and responses")
-fig6
+#api_create(fig7, filename = "NYC School quality perception survey questions and responses")
+fig7
 
 ```
 
@@ -530,7 +529,7 @@ survey_score_longer<-survey_score%>%
 
 
 #Plot the spread of the respondents average scores
-fig7<-survey_score_longer%>%
+fig8<-survey_score_longer%>%
   drop_na(boro)%>%
   ggplot(aes(x=boro, y=avg_score, fill=boro))+
   geom_boxplot(show.legend = FALSE)+
@@ -541,9 +540,9 @@ fig7<-survey_score_longer%>%
   theme(plot.title = element_text(hjust = 0.5, size=12, face="bold"),
         legend.position="none")
   
-fig7<-ggplotly(fig7)#%>%config(boro, displayModeBar = FALSE)
-#api_create(boro, filename = "Perception of NYC schools quality by Borough (survey responses)")
-fig7
+fig8<-ggplotly(fig8)#%>%config(boro, displayModeBar = FALSE)
+#api_create(fig8, filename = "Perception of NYC schools quality by Borough (survey responses)")
+fig8
 ```
 
 ```{r corr2, echo=FALSE, out.height='100%', out.width='100%', warning=FALSE}
@@ -575,13 +574,13 @@ strong_cor<-cor_tib%>%
 strong_cor_mat<-as.matrix(strong_cor)
 
 #Plot matrix table to see strength of relationships
-fig8 <- ggcorrplot(
+fig9 <- ggcorrplot(
   cor_mat, hc.order = FALSE, type = "lower", title = "Correlation matrix between school \nperformance and perception", 
   outline.col = "white", p.mat = p.mat)+
-  theme(plot.title = element_text(size=12, face="bold", hjust = 0.5,
+  theme(plot.title = element_text(size=10, face="bold", hjust = 0.5,
                                   margin = margin(t = 0, r = 0, b = 10, l = 0)))
 
-fig8
+fig9
 
 ```
 
