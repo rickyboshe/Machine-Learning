@@ -7,6 +7,7 @@ output:
     toc_depth: 1
     code_folding: hide
 ---
+<br></br>
 <center>
 #  Academic performance `r emo::ji("mortar_board")` vs Public perception
 </center>
@@ -54,9 +55,9 @@ Sys.setenv("plotly_api_key"="RrlUUhrCU8EIF2f840Eb")
 
 ```{r Data Import, include=TRUE, results='hide', message=FALSE, warning=FALSE }
 
-combined<-read_csv("combined.csv")
-gened<-read_tsv("masterfile11_gened_final.txt")
-spced<-read_tsv("masterfile11_d75_final.txt")
+combined<-read_csv("data/combined.csv")
+gened<-read_tsv("data/masterfile11_gened_final.txt")
+spced<-read_tsv("data/masterfile11_d75_final.txt")
 
 ```
 

@@ -1,9 +1,11 @@
-name: "Fredrick Boshe"
+name: "Fredrick B"
 navbar:
   title: "Fredrick Boshe"
   left:
     - text: "NYC Schools"
       href: index.html
+    - text: "Music Store"
+      href: Music.html
     - text: "USA Seafood"
       href: Fisheries.html
 output_dir: "docs"
