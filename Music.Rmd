@@ -10,7 +10,7 @@ output:
 <br></br>
 
 <center>
-#  Employing R and SQL to analyze record label `r emo::ji("musical_note")`?
+#  Employing R and SQL to analyze record label `r emo::ji("musical_note")`
 </center>
 
 This project combines both R and SQLite to showcase the robustness of querying data from a database and visualizing observations in R. While some data cleaning and manipulation can and will be done using query language ([SQLite](https://db.rstudio.com/databases/sqlite/)), majority of the data work will be done using R. 

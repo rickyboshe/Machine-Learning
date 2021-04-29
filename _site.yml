@@ -8,4 +8,6 @@ navbar:
       href: Music.html
     - text: "USA Seafood"
       href: Fisheries.html
+    - text: "Baseball"
+      href: Baseball.html
 output_dir: "docs"
