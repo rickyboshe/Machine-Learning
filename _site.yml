@@ -10,4 +10,6 @@ navbar:
       href: Fisheries.html
     - text: "Baseball"
       href: Baseball.html
+    - text: "Fitness"
+      href: Fitness.html
 output_dir: "docs"

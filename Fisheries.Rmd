@@ -4,7 +4,7 @@ output:
   html_document:
     collapsed: false
     number_sections: false
-    toc_depth: 1
+    toc_depth: 3
     code_folding: hide
 ---
 <br></br>
@@ -35,11 +35,19 @@ devtools::install_github("hadley/emo")
 
 ```
 
+```{r sys, include=FALSE}
+
+Sys.setenv("plotly_username"="rickymarvel")
+Sys.setenv("plotly_api_key"="RrlUUhrCU8EIF2f840Eb")
+
+```
+
+
 This project primarily analyzes the fisheries management dataset from the [National Oceanic and Atmostpheric Administration (NOAA)](https://www.fishwatch.gov/resources). Accessing the latest data using their **FishWatch API**.
 
 If you are not familiar with pulling data using APIs, this project might be helpful as this was alo my first attempt utilizing an API. 
 
-#### **Acessing the data**
+#### **Accessing the data**
 ```{r data, include=TRUE, warning=FALSE, message=FALSE}
 #Create a function to request the endpoint and receive a dataframe converted from JSON
 fish<- function(endpoint) {
@@ -301,6 +309,11 @@ fig1
 
 ```
 
+```{r include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+#api_create(fig1, filename = "Distribution of fish species within \nNOAA fisheries regions")
+
+```
+
 <br></br>
 The most species are found in the Greater Atlantic area while the least are found in the Pacific Island fishery region.
 
@@ -347,6 +360,11 @@ fig2<- ggplotly(fig2)%>% add_annotations( text="Fishing Rate",
   style(hoverinfo = 'none')
 
 fig2
+```
+
+```{r include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+#api_create(fig2, filename = "Fishing Rate by Fishing Region")
+
 ```
 
 The majority of fishing regions are experiencing stable fishing rates, well within recommended levels for existing populations. The Greater Atlantic fishing zone has the highest levels of over fishing as compared to the other regions (20%).
@@ -423,6 +441,12 @@ fig3<-ggplotly(fig3)
 fig3
 ```
 
+```{r include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+#api_create(fig3, filename = "Seafood nutritional value")
+
+```
+
+
 ```{r fig4, include=FALSE, out.width='100%', out.height='100%', fig.align="center", message=FALSE, warning=FALSE}
 
 fig4<-plot_ly(data = fish_longer, x=~nutrient, y =~percent, color =~nutrient, 
@@ -446,6 +470,10 @@ fig4
 
 ```
 
+```{r include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+#api_create(fig4, filename = "Fish calories and nutritional values (percentage RDA)")
+
+```
 
 It looks like most fish species are rich in protein, selenium and cholesterol. With the exception of Atlantic Bigeye Tuna and Pacific Blue Marin, all fish species have nutrients that are within the recommended dietary allowance in the USA. 
 
@@ -505,6 +533,10 @@ fig6 %>% layout(margin = list(l = 75, t=75))
 
 ```
 
+```{r include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+#api_create(fig6, filename = "Relationship between Calories and Nutrients")
+
+```
 
 It would appear that the calories of fish have weak negative relationship with the amount of carbohydrates and sugars. While there is no significant relationship between fish calories with dietary fibers, cholesterol and selenium. But there is a strong relationship between fish calories and fat (r = 0.91), saturated fat (r = 0.90) and protein (r = 0.39). 
 
@@ -694,6 +726,14 @@ fig11
 
 ```
 
+
+```{r include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+#api_create(fig8, filename = "Calories vs Fat (average values)")
+#api_create(fig9, filename = "Calories vs Saturated Fatty Acids (average values)")
+#api_create(fig10, filename = "Calories vs Carbohydrates (average values)")
+#api_create(fig11, filename = "Calories vs Protein (average values)")
+
+```
 
 Above graphs depict a **nutritional value quadrant** for the fish species found within the NOAA region. For all intents and purposes, the species found in **quadrant 1** in each graph have the best value for calories and their respective nutritional component.
 
@@ -933,6 +973,10 @@ fig13 %>% layout(margin = list(l = 65, t=75))
 
 ```
 
+```{r include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+#api_create(fig13, filename = "Relationship between Calories and Nutrients")
+
+```
 <br></br>
 
 From the two visualization, the following observations are seen:

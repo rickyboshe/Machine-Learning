@@ -4,7 +4,7 @@ output:
   html_document:
     collapsed: false
     number_sections: false
-    toc_depth: 1
+    toc_depth: 3
     code_folding: hide
 ---
 <br></br>
