@@ -45,7 +45,8 @@ Sys.setenv("plotly_api_key"="RrlUUhrCU8EIF2f840Eb")
 
 This project primarily analyzes the fisheries management dataset from the [National Oceanic and Atmostpheric Administration (NOAA)](https://www.fishwatch.gov/resources). Accessing the latest data using their **FishWatch API**.
 
-If you are not familiar with pulling data using APIs, this project might be helpful as this was alo my first attempt utilizing an API. 
+
+If you are not familiar with pulling data using APIs, this project might be helpful as this was also my first attempt utilizing an API. 
 
 #### **Accessing the data**
 ```{r data, include=TRUE, warning=FALSE, message=FALSE}
