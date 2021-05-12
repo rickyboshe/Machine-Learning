@@ -12,4 +12,6 @@ navbar:
       href: Baseball.html
     - text: "Fitness"
       href: Fitness.html
+    - text: "Movies"
+      href: Movies.html
 output_dir: "docs"
