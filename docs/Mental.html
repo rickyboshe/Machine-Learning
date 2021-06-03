@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Mental Health</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Machine Learning</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Spam Filter</a>
+</li>
+<li>
+  <a href="Mental.html">Mental Health</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Mental Health</h1>
+
+</div>
+
+
+<p><br></br></p>
+<center>
+<div id="mental-health-at-the-workplace" class="section level1">
+<h1>Mental Health at the Workplace 🧠</h1>
+</center>
+<p>Over the past year we have heard about just how much the pandemic has exacerbated the mental health crisis around the world. According to <a href="https://www.kff.org/coronavirus-covid-19/issue-brief/the-implications-of-covid-19-for-mental-health-and-substance-use/">research</a>, an estimated 4 in 10 adults in the USA reported symptoms of anxiety or depressive disorder during the pandemic. This figure is up from 1 in 10 adults in 2019.</p>
+<p>The social isolation, community lockdown and grim newsfeeds filled with pandemic casualties all paid a heavy toll on our mental health.This has led to health authorities such as the CDC issuing guidelines on how to <a href="https://www.cdc.gov/coronavirus/2019-ncov/daily-life-coping/managing-stress-anxiety.html">cope with stress</a>.</p>
+<p>With this in mind, i decided to analyze what were the mental health trends <strong>before</strong> the pandemic, looking into in the tech industry which has been know to have serious mental health issues for its employees. Using data from <a href="https://www.kaggle.com/anth7310/mental-health-in-the-tech-industry">Open Source Mental Illness (OSMI)</a> using survey data from years 2014, 2016, 2017, 2018 and 2019. The data is on a database as it contains multiple tables. I will use SQLite queries to extract the variables of interest and continue with R script to analyze and visualize the relationships and patterns between the indicators.</p>
+<p>After downloading the database, load it/create a connection within an R markdown chunk. You can declare the connection within the setup chunk and you wont need to constantly declare it in every subsequent chunk.</p>
+<pre class="r"><code>conn&lt;-dbConnect(SQLite(), &quot;mental_health.sqlite&quot;)
+tables &lt;- dbListTables(conn)</code></pre>
+<p>Loading up the database connection we can see that the database has 3 tables, namely <em>Answer</em>, <em>Question</em>, <em>Survey</em>. The <em>question</em> table is basically a <em>key</em> for indicators which you might find interesting to analyze. Take a few minutes to query around the data you will realize each year has different number of observations and respondents (identified by the <em>UserID</em> column in the Answers table).</p>
+<pre class="sql"><code>--Preview the tables in the database
+SELECT
+    name,
+    type
+FROM sqlite_master
+WHERE type IN (&quot;table&quot;,&quot;view&quot;);
+</code></pre>
+<div class="knitsql-table">
+<table>
+<caption>
+3 records
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:left;">
+type
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Answer
+</td>
+<td style="text-align:left;">
+table
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Question
+</td>
+<td style="text-align:left;">
+table
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Survey
+</td>
+<td style="text-align:left;">
+table
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Join the tables with an SQL query and save the full dataset. The tables have (for some reason) been elongated. thankfully, we can pivot wider the tables with a single R command. This will allow us to glimpse all the indicators and select the ones most important for our analysis.</p>
+<pre class="sql"><code>---select and re-arrange columns
+select UserID as id, SurveyID as year, questiontext as question, AnswerText as answer 
+FROM Answer as A
+LEFT JOIN Question as Q ON Q.questionid=A.QuestionID;
+</code></pre>
+<p>As you can see, this full dataset would have 107 variables! Clearly we have no intention of analyzing all variable. We shall subset the variables of interest.</p>
+<p>The indicators of interest for this analysis are: 1. Age 2. Gender 3. Location 4. Remote work 5. Family history of mental illness 6. Respondent diagnosis of mental illness 7. Race</p>
+<pre class="sql"><code>--You can preview the available indicators per survey year (e.g. the variables for 2016)
+select Q.questiontext
+from Question as Q
+Left join Answer as A on A.QuestionID = Q.questionid
+Where A.SurveyID=2016
+group by questiontext;</code></pre>
+<div class="knitsql-table">
+<table>
+<caption>
+Displaying records 1 - 10
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+questiontext
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Are you self-employed?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Did you feel that your previous employers took mental health as seriously as physical health?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Did you hear of or observe negative consequences for co-workers with mental health issues in your previous workplaces?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Did your previous employers ever formally discuss mental health (as part of a wellness campaign or other official communication)?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Did your previous employers provide resources to learn more about mental health disorders and how to seek help?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Do you believe your productivity is ever affected by a mental health issue?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Do you currently have a mental health disorder?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Do you feel that being identified as a person with a mental health issue would hurt your career?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Do you feel that your employer takes mental health as seriously as physical health?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Do you have a family history of mental illness?
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><img src="Mental_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We shall pick 3 years that had the most respondents, that is 2014, 2016 and 2017. This will help smooth things along the way with manageable datasets. I will query out the 3 distinct tables, with the identified indicators of interest. The reason for this is that each year, respondents did not answer the same questions all around.</p>
+<pre class="sql"><code>---Subset a 2014 dataframe with variables of interest
+select A.AnswerText as answer, A.SurveyID as year, A.UserID,
+       Q.questiontext as question
+from Answer as A
+LEFT JOIN Question as Q ON Q.questionid=A.QuestionID
+WHERE A.SurveyID=2014
+AND (Q.questionid==1 OR Q.questionid==2 OR Q.questionid==3 
+OR Q.questionid==6 OR Q.questionid==7 OR Q.questionid==93);
+</code></pre>
+<pre class="sql"><code>---Subset a 2016 dataframe with variables of interest
+select A.AnswerText as answer, A.SurveyID as year, A.UserID,
+       Q.questiontext as question
+from Answer as A
+LEFT JOIN Question as Q ON Q.questionid=A.QuestionID
+WHERE A.SurveyID=2016
+AND (Q.questionid==1 OR Q.questionid==2 OR Q.questionid==3 
+OR Q.questionid==6 OR Q.questionid==34 OR Q.questionid==117 OR Q.questionid==118);</code></pre>
+<pre class="sql"><code>---Subset a 2017 dataframe with variables of interest
+select A.AnswerText as answer, A.SurveyID as year, A.UserID,
+       Q.questiontext as question
+from Answer as A
+LEFT JOIN Question as Q ON Q.questionid=A.QuestionID
+WHERE A.SurveyID=2017
+AND (Q.questionid==1 OR Q.questionid==2 OR Q.questionid==3 
+OR Q.questionid==6 OR Q.questionid==78 OR Q.questionid==89);</code></pre>
+<p>A quick glance shows how each year there some questions that are not found in another year. Plus the number of respondents is not consistent across the years. It is better to subset each year as a unique dataset.</p>
+<div id="data-cleaning" class="section level3">
+<h3>Data Cleaning</h3>
+<pre class="r"><code>#Pivot the columns longer and rename them
+df.2014&lt;-df.2014%&gt;%
+    pivot_wider(names_from = question,
+                values_from = answer)
+
+df.2014&lt;-df.2014%&gt;%
+    rename(age=`What is your age?`,
+           location=`What country do you live in?`,
+           gender=`What is your gender?`,
+           fam_history_MI=`Do you have a family history of mental illness?`,
+           diagnose=`Have you ever sought treatment for a mental health disorder from a mental health professional?`,
+           remote_wrk=`Do you work remotely (outside of an office) at least 50% of the time?`,
+           id=UserID)
+
+
+df.2016&lt;-df.2016%&gt;%
+    pivot_wider(names_from = question,
+                values_from = answer)
+
+df.2016&lt;-df.2016%&gt;%
+    rename(age=`What is your age?`,
+           location=`What country do you live in?`,
+           gender=`What is your gender?`,
+           fam_history_MI=`Do you have a family history of mental illness?`,
+           diagnose=`Have you ever been diagnosed with a mental health disorder?`,
+           remote_wrk=`Do you work remotely?`,
+           id=UserID,
+           position=`Which of the following best describes your work position?`)
+
+df.2017&lt;-df.2017%&gt;%
+    pivot_wider(names_from = question,
+                values_from = answer)
+
+df.2017&lt;-df.2017%&gt;%
+    rename(age=`What is your age?`,
+           location=`What country do you live in?`,
+           gender=`What is your gender?`,
+           fam_history_MI=`Do you have a family history of mental illness?`,
+           diagnose= `Are you openly identified at work as a person with a mental health issue?`,
+           race=`What is your race?`,
+           id=UserID)</code></pre>
+<p>After reshaping our data we see that the 2016 dataset has the most respondents, 1,433 while the 2017 dataset has the fewest, 756. We can also see that the only common indicators are age, gender and location and family mental history. As the respondents differ across the years, it would be unwise to combine the datasets using UserID. But we can analyze each dataset individually and draw comparisons.</p>
+<p>Next step is to manipulate the data and improve consistency. Some indicators, such has race has text and numerical in the same column.</p>
+</div>
+<div id="data-manipulation-and-exploration" class="section level3">
+<h3>Data Manipulation and Exploration</h3>
+<pre class="r"><code># 2014 dataset
+# For consistency purposes, only keep those that identified as Male or Female
+# Keep only locations with more than 20 observations in each of the survey years
+country&lt;-c(&quot;Australia&quot;, &quot;Canada&quot;, &quot;Germany&quot;, &quot;Netherlands&quot;, 
+           &quot;United Kingdom&quot;, &quot;United States&quot;)
+
+#Transform categorical variables
+df.2014&lt;-df.2014%&gt;%
+  filter(location %in% country)%&gt;%
+  mutate(gender=as.factor(gender),
+         diagnose=as.factor(diagnose),
+         fam_history_MI=as.factor(fam_history_MI),
+         remote_wrk=as.factor(remote_wrk),
+         location=as.factor(location))%&gt;%
+  filter(gender==&quot;Male&quot;|gender==&quot;Female&quot;)%&gt;%
+  mutate(diagnose= ifelse(diagnose==1, &quot;Yes&quot;, &quot;No&quot;))
+
+df.2014$id&lt;-NULL
+df.2014$age&lt;-parse_number(df.2014$age)
+
+# 2016 dataset
+# Some of the columns are lists, unlist them
+df.2016$age&lt;-unlist(df.2016$age)
+df.2016$gender&lt;-unlist(df.2016$gender)
+df.2016$location&lt;-unlist(df.2016$location)
+df.2016$fam_history_MI&lt;-unlist(df.2016$fam_history_MI)
+df.2016$diagnose&lt;-unlist(df.2016$diagnose)
+df.2016$remote_wrk&lt;-unlist(df.2016$remote_wrk)
+
+#Create country variable to match list of countries 
+country&lt;-c(&quot;Australia&quot;, &quot;Canada&quot;, &quot;Germany&quot;, &quot;Netherlands&quot;, 
+           &quot;United Kingdom&quot;, &quot;United States of America&quot;)
+
+df.2016&lt;-df.2016 %&gt;%
+  filter(gender==&quot;Male&quot;|gender==&quot;Female&quot;)%&gt;%
+  filter(location %in% country)%&gt;%
+  mutate(location=ifelse(location==&quot;United States of America&quot;, 
+                         &quot;United States&quot;, location))%&gt;%
+  mutate(gender=as.factor(gender),
+         diagnose=as.factor(diagnose),
+         fam_history_MI=as.factor(fam_history_MI),
+         remote_wrk=as.factor(remote_wrk),
+         location=as.factor(location))
+df.2016$position&lt;-NULL
+df.2016$id&lt;-NULL
+df.2016$age&lt;-parse_number(df.2016$age)
+
+#There are some impossible values in the age column. Remove them
+df.2016&lt;-df.2016%&gt;%
+  filter(age&lt;100 &amp; age&gt;16)
+
+
+# 2017 dataset
+# This dataset has a Race column but it needs recoding
+df.2017&lt;-df.2017 %&gt;%
+  filter(gender==&quot;Male&quot;|gender==&quot;Female&quot;)%&gt;%
+  filter(location %in% country)%&gt;%
+  mutate(race=ifelse(race==&quot;-1&quot;, &quot;Unidentified&quot;,
+                     ifelse(race==&quot;More than one of the above&quot;, &quot;Multiracial&quot;,
+                            ifelse(race==&quot;I prefer not to answer&quot;, &quot;Unidentified&quot;, race))))%&gt;%
+  mutate(diagnose= ifelse(diagnose==1, &quot;Yes&quot;, &quot;No&quot;))%&gt;%
+  mutate(gender=as.factor(gender),
+         diagnose=as.factor(diagnose),
+         fam_history_MI=as.factor(fam_history_MI),
+         location=as.factor(location),
+         race=as.factor(race))
+
+df.2017$id&lt;-NULL
+df.2017$age&lt;-parse_number(df.2017$age)
+
+
+#Explore data after cleaning
+plot_intro(df.2014, ggtheme = theme_bw())</code></pre>
+<p><img src="Mental_files/figure-html/manipulate-1.png" width="864" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot_bar(df.2014, maxcat = 5, by=&quot;gender&quot;, 
+         ggtheme = theme_bw(), ncol = 2,
+         title = &quot;2014 Respondents&quot;)</code></pre>
+<p><img src="Mental_files/figure-html/manipulate-2.png" width="864" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot_bar(df.2016, maxcat = 5, by=&quot;gender&quot;, 
+         ggtheme = theme_bw(), ncol = 2,
+         title = &quot;2016 Respondents&quot;)</code></pre>
+<p><img src="Mental_files/figure-html/manipulate-3.png" width="864" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot_bar(df.2017, maxcat = 5, by=&quot;gender&quot;, 
+         ggtheme = theme_bw(), ncol = 2,
+         title = &quot;2017 Respondents&quot;)</code></pre>
+<p><img src="Mental_files/figure-html/manipulate-4.png" width="864" style="display: block; margin: auto;" /> <strong>Exploratory Statistics:</strong> The dataset does not contain any missing values, which makes our easier. It would seem for each survey year, 7 out of 10 respondents are male. When it comes to mental health diagnosis, interestingly, a higher share of women have been diagnosed with mental health issues as compared not being diagnosed. This trend is consistent in all 3 survey years.</p>
+</div>
+<div id="factor-selection" class="section level3">
+<h3>Factor Selection</h3>
+<pre class="r"><code>#2014
+chi.square &lt;- vector()
+p.value &lt;- vector()
+cateVar &lt;- df.2014 %&gt;% 
+  dplyr::select(-diagnose) %&gt;% 
+  keep(is.factor)
+
+for (i in 1:length(cateVar)) {
+ p.value[i] &lt;- round(chisq.test(df.2014$diagnose, unname(unlist(cateVar[i])), correct = FALSE)[3]$p.value, 3)
+ chi.square[i] &lt;- unname(chisq.test(df.2014$diagnose, unname(unlist(cateVar[i])), correct = FALSE)[1]$statistic)
+}
+
+chi_sqaure_test &lt;- tibble(variable = names(cateVar)) %&gt;% 
+  add_column(chi.square = chi.square) %&gt;% 
+  add_column(p.value = p.value)
+knitr::kable(chi_sqaure_test, caption = &quot;Chi-square Test (2014)&quot;)%&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Chi-square Test (2014)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+variable
+</th>
+<th style="text-align:right;">
+chi.square
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+gender
+</td>
+<td style="text-align:right;">
+37.515665
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+location
+</td>
+<td style="text-align:right;">
+7.425781
+</td>
+<td style="text-align:right;">
+0.191
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fam_history_MI
+</td>
+<td style="text-align:right;">
+151.375002
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+remote_wrk
+</td>
+<td style="text-align:right;">
+0.798249
+</td>
+<td style="text-align:right;">
+0.372
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#2016
+chi.square &lt;- vector()
+p.value &lt;- vector()
+cateVar &lt;- df.2016 %&gt;% 
+  dplyr::select(-diagnose) %&gt;% 
+  keep(is.factor)
+
+for (i in 1:length(cateVar)) {
+ p.value[i] &lt;- round(chisq.test(df.2016$diagnose, unname(unlist(cateVar[i])), correct = FALSE)[3]$p.value, 3)
+ chi.square[i] &lt;- unname(chisq.test(df.2016$diagnose, unname(unlist(cateVar[i])), correct = FALSE)[1]$statistic)
+}
+
+chi_sqaure_test &lt;- tibble(variable = names(cateVar)) %&gt;% 
+  add_column(chi.square = chi.square) %&gt;% 
+  add_column(p.value = p.value)
+knitr::kable(chi_sqaure_test, caption = &quot;Chi-square Test (2016)&quot;)%&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Chi-square Test (2016)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+variable
+</th>
+<th style="text-align:right;">
+chi.square
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+gender
+</td>
+<td style="text-align:right;">
+32.525143
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+location
+</td>
+<td style="text-align:right;">
+29.189604
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fam_history_MI
+</td>
+<td style="text-align:right;">
+186.839854
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+remote_wrk
+</td>
+<td style="text-align:right;">
+4.119957
+</td>
+<td style="text-align:right;">
+0.127
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#2017
+chi.square &lt;- vector()
+p.value &lt;- vector()
+cateVar &lt;- df.2017 %&gt;% 
+  dplyr::select(-diagnose) %&gt;% 
+  keep(is.factor)
+
+for (i in 1:length(cateVar)) {
+ p.value[i] &lt;- round(chisq.test(df.2017$diagnose, unname(unlist(cateVar[i])), correct = FALSE)[3]$p.value, 3)
+ chi.square[i] &lt;- unname(chisq.test(df.2017$diagnose, unname(unlist(cateVar[i])), correct = FALSE)[1]$statistic)
+}
+
+chi_sqaure_test &lt;- tibble(variable = names(cateVar)) %&gt;% 
+  add_column(chi.square = chi.square) %&gt;% 
+  add_column(p.value = p.value)
+knitr::kable(chi_sqaure_test, caption = &quot;Chi-square Test (2017)&quot;)%&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Chi-square Test (2017)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+variable
+</th>
+<th style="text-align:right;">
+chi.square
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+gender
+</td>
+<td style="text-align:right;">
+2.854531
+</td>
+<td style="text-align:right;">
+0.091
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+location
+</td>
+<td style="text-align:right;">
+10.198122
+</td>
+<td style="text-align:right;">
+0.070
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fam_history_MI
+</td>
+<td style="text-align:right;">
+3.018338
+</td>
+<td style="text-align:right;">
+0.221
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+race
+</td>
+<td style="text-align:right;">
+1.834553
+</td>
+<td style="text-align:right;">
+0.766
+</td>
+</tr>
+</tbody>
+</table>
+<p>Taking multiple Chi-square tests to check for independence of mental health diagnosis on gender, family history, race and remote work we can observe some relationships.</p>
+<p><strong>Gender:</strong> For the 2016 and 2017 surveys, we can reject the <em>null hypothesis</em> of independence between gender and mental health diagnosis. We fail to reject the null hypothesis for the survey year 2017.</p>
+<p><strong>Family history:</strong> For the 2016 and 2017 surveys, we can reject the <em>null hypothesis</em> of independence between family history and mental health diagnosis. We fail to reject the null hypothesis for the survey year 2017.</p>
+<p><strong>Remote work:</strong> Only 2016 and 2017 surveys have information on working remotely. As the p-values are above the threshold, we fail to reject the <em>null hypothesis</em> of independence between working remotely and mental health diagnosis. It would seem working remotely is not a good predictor for the state of mental health for employees in this dataset.</p>
+<p><strong>Race:</strong> The 2017 dataset has information on race but after running the chi-squared test, we fail to reject the <em>null hypothesis</em> of independence between race and mental health diagnosis.</p>
+<p><strong>Location:</strong> This variable is significant and not independent in the 2014 dataset. Its p-values in 2016 and 2017 are too high meaning we fail to reject the <em>null hypothesis</em> of independence between location and mental health diagnosis.</p>
+<pre class="r"><code>p1&lt;-df.2014%&gt;%
+  ggplot(aes(x=diagnose, fill=gender))+
+  geom_histogram(stat = &quot;count&quot;)+
+  theme_bw()+
+  labs(title = &quot;2014&quot;,
+       x=&quot;&quot;,
+       y=&quot;Count&quot;)+
+  theme(plot.title = element_text(face=&quot;bold&quot;, size=14, hjust = 0.5),
+        legend.position = &quot;none&quot;)
+
+p2&lt;-df.2016%&gt;%
+  ggplot(aes(x=diagnose, fill=gender))+
+  geom_histogram(stat = &quot;count&quot;)+
+  theme_bw()+
+  theme(legend.position = &quot;none&quot;)+
+  labs(title = &quot;2016&quot;,
+       x=&quot;&quot;,
+       y=&quot;&quot;)+
+  theme(plot.title = element_text(face=&quot;bold&quot;, size=14, hjust = 0.5),
+        legend.position = &quot;none&quot;)
+
+p3&lt;-df.2017%&gt;%
+  ggplot(aes(x=diagnose, fill=gender))+
+  geom_histogram(stat = &quot;count&quot;)+
+  theme_bw()+
+  labs(title = &quot;2017&quot;,
+       x=&quot;&quot;,
+       y=&quot;&quot;)+
+  theme(plot.title = element_text(face=&quot;bold&quot;, size=14, hjust = 0.5),
+        axis.title.x = element_text(face=&quot;bold&quot;, size=14, hjust = 0.5, vjust = -0.8))
+
+grid.arrange(arrangeGrob(p1,p2, ncol = 2),
+             heights=c(3.5/4, 3.5/4), ncol=1,
+             p3,nrow=2, top=textGrob(&quot;Diagnosed with a mental health issues&quot;,gp=gpar(cex=1.5,col=&quot;black&quot;)))</code></pre>
+<p><img src="Mental_files/figure-html/freq-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>It would appear there is not significant relationship for our variables of interest within the 2017 dataset. This can be explained by the very low frequency of respondents that had a mental health diagnosis, as compared to 2016 and 2014. The distribution of respondents is more balanced in 2014 and 2016.</p>
+</div>
+<div id="balance-of-data" class="section level3">
+<h3>Balance of Data</h3>
+<pre class="r"><code>round(prop.table(table(df.2014$diagnose)),3)</code></pre>
+<pre><code>## 
+##    No   Yes 
+## 0.476 0.524</code></pre>
+<pre class="r"><code>round(prop.table(table(df.2016$diagnose)),3)</code></pre>
+<pre><code>## 
+##    No   Yes 
+## 0.483 0.517</code></pre>
+<pre class="r"><code>round(prop.table(table(df.2017$diagnose)),3)</code></pre>
+<pre><code>## 
+##    No   Yes 
+## 0.884 0.116</code></pre>
+<pre class="r"><code>rm(df.2014, df.2017)
+
+df.2016$remote_wrk&lt;-NULL</code></pre>
+<p>The 2014 and 2016 datasets have a good balance of data with the share of respondents with a diagnose of mental health issues at 48% for both. But the 2017 dataset is very unbalanced with just 12% with a diagnose of mental health.</p>
+<p>It is clear that due to its poor sampling, the 2017 data set would be of very little value to us. Also the remote work variable has little to not relationship to the mental health of workers. Therefore the 2017 dataset was removed.</p>
+<p>As <em>location</em> was only significant in the 2016 dataset, it would be ill advised to combine the 2016 and 2014 datasets. The are to be analyzed separately. I decided to remain with the 2016 dataset as it has more observations.</p>
+</div>
+<div id="model" class="section level2">
+<h2>Model</h2>
+<p>I primarily used binary classifiers to try and model the predictors against the state of a respondent having mental health issues or not. A comparison of <strong>Logistic Regression</strong>, <strong>Decision Tree</strong> and <strong>Random Forest</strong> was done at the end to select the best model.</p>
+<div id="normality-of-data" class="section level3">
+<h3>Normality of Data</h3>
+<pre class="r"><code>#Test normality of age 
+shapiro.test(df.2016$age)</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  df.2016$age
+## W = 0.94888, p-value &lt; 2.2e-16</code></pre>
+<pre class="r"><code>#Wilcox test to see if there is a significant difference in Age between people diagnosed with mental health issues.
+wilcox.test(age ~ diagnose, data = df.2016,
+                   exact = FALSE)</code></pre>
+<pre><code>## 
+##  Wilcoxon rank sum test with continuity correction
+## 
+## data:  age by diagnose
+## W = 169985, p-value = 0.1123
+## alternative hypothesis: true location shift is not equal to 0</code></pre>
+<pre class="r"><code>df.2016%&gt;%ggplot(aes(x=diagnose, y=age, fill=diagnose))+
+  geom_boxplot()+
+  theme_bw()+
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="Mental_files/figure-html/normality-1.png" width="576" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#We can remove the year column and recode the diagnose column
+df.2016$year&lt;-NULL
+df.2016&lt;-df.2016%&gt;%
+  mutate(diagnose=ifelse(diagnose==&quot;Yes&quot;,1,0))
+df.2016$diagnose&lt;-as.factor(df.2016$diagnose)</code></pre>
+<p>The data deviates significantly from a normal distribution as the <strong>p-value</strong> from Shapiro’s test is below the significance level alpha = 0.05.</p>
+<p>As the <strong>p-value</strong> of the wilcox test is larger than the significance level alpha = 0.05, we can conclude that there is no significant difference in age between those diagnosed with mental health issues and those not.</p>
+</div>
+<div id="split-data" class="section level3">
+<h3>Split Data</h3>
+<pre class="r"><code>#split data
+set.seed(4)
+index&lt;- createDataPartition(df.2016$diagnose,p=0.8,list=FALSE)
+training&lt;- df.2016[index,]
+testing&lt;- df.2016[-index,]
+
+#Check split
+round(prop.table(table(df.2016$diagnose)),3)</code></pre>
+<pre><code>## 
+##     0     1 
+## 0.483 0.517</code></pre>
+<pre class="r"><code>round(prop.table(table(training$diagnose)),3)</code></pre>
+<pre><code>## 
+##     0     1 
+## 0.483 0.517</code></pre>
+<pre class="r"><code>round(prop.table(table(testing$diagnose)),3)</code></pre>
+<pre><code>## 
+##     0     1 
+## 0.481 0.519</code></pre>
+</div>
+<div id="logistic-regression" class="section level3">
+<h3>Logistic Regression</h3>
+<pre class="r"><code>## Train the model
+logit.mod &lt;- glm(diagnose~., family = binomial(link = &#39;logit&#39;), 
+                 data = training)
+
+## Look at the result
+summ(logit.mod)</code></pre>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Observations
+</td>
+<td style="text-align:right;">
+960
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Dependent variable
+</td>
+<td style="text-align:right;">
+diagnose
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Type
+</td>
+<td style="text-align:right;">
+Generalized linear model
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Family
+</td>
+<td style="text-align:right;">
+binomial
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Link
+</td>
+<td style="text-align:right;">
+logit
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+χ²(9)
+</td>
+<td style="text-align:right;">
+184.81
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Pseudo-R² (Cragg-Uhler)
+</td>
+<td style="text-align:right;">
+0.23
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Pseudo-R² (McFadden)
+</td>
+<td style="text-align:right;">
+0.14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+AIC
+</td>
+<td style="text-align:right;">
+1164.97
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+BIC
+</td>
+<td style="text-align:right;">
+1213.64
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Est.
+</th>
+<th style="text-align:right;">
+S.E.
+</th>
+<th style="text-align:right;">
+z val.
+</th>
+<th style="text-align:right;">
+p
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+0.78
+</td>
+<td style="text-align:right;">
+0.58
+</td>
+<td style="text-align:right;">
+1.35
+</td>
+<td style="text-align:right;">
+0.18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+age
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+1.32
+</td>
+<td style="text-align:right;">
+0.19
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+genderMale
+</td>
+<td style="text-align:right;">
+-0.58
+</td>
+<td style="text-align:right;">
+0.17
+</td>
+<td style="text-align:right;">
+-3.46
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+locationCanada
+</td>
+<td style="text-align:right;">
+-1.22
+</td>
+<td style="text-align:right;">
+0.53
+</td>
+<td style="text-align:right;">
+-2.29
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+locationGermany
+</td>
+<td style="text-align:right;">
+-1.23
+</td>
+<td style="text-align:right;">
+0.55
+</td>
+<td style="text-align:right;">
+-2.23
+</td>
+<td style="text-align:right;">
+0.03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+locationNetherlands
+</td>
+<td style="text-align:right;">
+-0.60
+</td>
+<td style="text-align:right;">
+0.57
+</td>
+<td style="text-align:right;">
+-1.05
+</td>
+<td style="text-align:right;">
+0.30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+locationUnited Kingdom
+</td>
+<td style="text-align:right;">
+-1.11
+</td>
+<td style="text-align:right;">
+0.48
+</td>
+<td style="text-align:right;">
+-2.30
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+locationUnited States
+</td>
+<td style="text-align:right;">
+-0.81
+</td>
+<td style="text-align:right;">
+0.45
+</td>
+<td style="text-align:right;">
+-1.79
+</td>
+<td style="text-align:right;">
+0.07
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+fam_history_MINo
+</td>
+<td style="text-align:right;">
+-0.88
+</td>
+<td style="text-align:right;">
+0.20
+</td>
+<td style="text-align:right;">
+-4.45
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+fam_history_MIYes
+</td>
+<td style="text-align:right;">
+1.01
+</td>
+<td style="text-align:right;">
+0.18
+</td>
+<td style="text-align:right;">
+5.55
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> Standard errors: MLE
+</td>
+</tr>
+</tfoot>
+</table>
+<pre class="r"><code>## Predict the mental health against our test data
+logit.pred.prob &lt;- predict(logit.mod, testing, type = &#39;response&#39;)
+logit.pred &lt;- as.factor(ifelse(logit.pred.prob &gt; 0.5, 1, 0))
+head(testing, 3)</code></pre>
+<pre><code>## # A tibble: 3 x 5
+##     age gender location      fam_history_MI diagnose
+##   &lt;dbl&gt; &lt;fct&gt;  &lt;fct&gt;         &lt;fct&gt;          &lt;fct&gt;   
+## 1    34 Male   United States Yes            1       
+## 2    30 Female United States Yes            1       
+## 3    26 Male   United States Yes            0</code></pre>
+<pre class="r"><code>head(logit.pred, 3)</code></pre>
+<pre><code>## 1 2 3 
+## 1 1 1 
+## Levels: 0 1</code></pre>
+<pre class="r"><code>#Feature analysis
+knitr::kable(round(anova(logit.mod, test=&quot;Chisq&quot;),3), 
+             caption = &quot;Likelihood Ratio test&quot;)%&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Likelihood Ratio test
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Df
+</th>
+<th style="text-align:right;">
+Deviance
+</th>
+<th style="text-align:right;">
+Resid. Df
+</th>
+<th style="text-align:right;">
+Resid. Dev
+</th>
+<th style="text-align:right;">
+Pr(&gt;Chi)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+NULL
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+959
+</td>
+<td style="text-align:right;">
+1329.776
+</td>
+<td style="text-align:right;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1.010
+</td>
+<td style="text-align:right;">
+958
+</td>
+<td style="text-align:right;">
+1328.766
+</td>
+<td style="text-align:right;">
+0.315
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gender
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+27.296
+</td>
+<td style="text-align:right;">
+957
+</td>
+<td style="text-align:right;">
+1301.470
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+location
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+15.639
+</td>
+<td style="text-align:right;">
+952
+</td>
+<td style="text-align:right;">
+1285.831
+</td>
+<td style="text-align:right;">
+0.008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fam_history_MI
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+140.861
+</td>
+<td style="text-align:right;">
+950
+</td>
+<td style="text-align:right;">
+1144.970
+</td>
+<td style="text-align:right;">
+0.000
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#Odd ratio
+knitr::kable(round(exp(cbind(coef(logit.mod), confint.default(logit.mod))),3),
+             caption = &quot;Odds Ratio&quot;)%&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Odds Ratio
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+</th>
+<th style="text-align:right;">
+2.5 %
+</th>
+<th style="text-align:right;">
+97.5 %
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+2.185
+</td>
+<td style="text-align:right;">
+0.702
+</td>
+<td style="text-align:right;">
+6.796
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:right;">
+1.011
+</td>
+<td style="text-align:right;">
+0.995
+</td>
+<td style="text-align:right;">
+1.029
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+genderMale
+</td>
+<td style="text-align:right;">
+0.562
+</td>
+<td style="text-align:right;">
+0.405
+</td>
+<td style="text-align:right;">
+0.778
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+locationCanada
+</td>
+<td style="text-align:right;">
+0.295
+</td>
+<td style="text-align:right;">
+0.104
+</td>
+<td style="text-align:right;">
+0.837
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+locationGermany
+</td>
+<td style="text-align:right;">
+0.292
+</td>
+<td style="text-align:right;">
+0.099
+</td>
+<td style="text-align:right;">
+0.863
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+locationNetherlands
+</td>
+<td style="text-align:right;">
+0.548
+</td>
+<td style="text-align:right;">
+0.178
+</td>
+<td style="text-align:right;">
+1.690
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+locationUnited Kingdom
+</td>
+<td style="text-align:right;">
+0.331
+</td>
+<td style="text-align:right;">
+0.129
+</td>
+<td style="text-align:right;">
+0.850
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+locationUnited States
+</td>
+<td style="text-align:right;">
+0.443
+</td>
+<td style="text-align:right;">
+0.182
+</td>
+<td style="text-align:right;">
+1.079
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fam_history_MINo
+</td>
+<td style="text-align:right;">
+0.414
+</td>
+<td style="text-align:right;">
+0.281
+</td>
+<td style="text-align:right;">
+0.610
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fam_history_MIYes
+</td>
+<td style="text-align:right;">
+2.740
+</td>
+<td style="text-align:right;">
+1.919
+</td>
+<td style="text-align:right;">
+3.912
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code># Evaluation Metrics
+log.result &lt;- confusionMatrix(data = logit.pred, testing$diagnose, 
+                              positive = &quot;1&quot;)
+log.precision &lt;- log.result$byClass[&#39;Pos Pred Value&#39;]
+log.recall    &lt;- log.result$byClass[&#39;Sensitivity&#39;]
+log.F1        &lt;- log.result$byClass[&#39;F1&#39;]
+
+log.result</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  0  1
+##          0 78 35
+##          1 37 89
+##                                           
+##                Accuracy : 0.6987          
+##                  95% CI : (0.6363, 0.7562)
+##     No Information Rate : 0.5188          
+##     P-Value [Acc &gt; NIR] : 1.156e-08       
+##                                           
+##                   Kappa : 0.3963          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.9062          
+##                                           
+##             Sensitivity : 0.7177          
+##             Specificity : 0.6783          
+##          Pos Pred Value : 0.7063          
+##          Neg Pred Value : 0.6903          
+##              Prevalence : 0.5188          
+##          Detection Rate : 0.3724          
+##    Detection Prevalence : 0.5272          
+##       Balanced Accuracy : 0.6980          
+##                                           
+##        &#39;Positive&#39; Class : 1               
+## </code></pre>
+<p>From the logistic regression we can see the following predictors with the lowest <em>p-values</em>:</p>
+<p><strong>Age:</strong> As age increases, respondents were slightly more likely to have been diagnosed with mental health issues.</p>
+<p><strong>Gender:</strong> Men were less likely to have been diagnosed with mental health issues as compared to women respondents.</p>
+<p><strong>Family history:</strong> People with a family history of mental health issues are more likely to also be diagnosed with mental health issues.</p>
+<p>A feature analysis shows that gender and family history are the strongest predictors of mental health in the survey response. In fact, an odds ratio analysis shows that if a respondent has a family history of mental health issues, they are <span style="color: red;"><strong>5 times</strong></span> more likely to also be diagnosed with mental health issues. Meanwhile, if a respondent is male, they are <span style="color: red;"><strong>half</strong></span> as likely as women to have diagnosed with mental health issues.</p>
+</div>
+</div>
+<div id="decision-tree" class="section level2">
+<h2>Decision Tree</h2>
+<pre class="r"><code>#Decision Tree
+# Train model
+tree.model &lt;- rpart(diagnose~.,
+                    data = training,
+                    method = &quot;class&quot;,
+                    control = rpart.control(xval = 10))
+# Plot
+rpart.plot(tree.model)</code></pre>
+<p><img src="Mental_files/figure-html/tree-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Evaluation metrics (Tree)
+tree.pred      &lt;- predict(tree.model, newdata = testing, type = &quot;class&quot;)
+tree.result    &lt;- confusionMatrix(data = tree.pred, testing$diagnose)
+tree.precision &lt;- tree.result$byClass[&#39;Pos Pred Value&#39;]
+tree.recall    &lt;- tree.result$byClass[&#39;Sensitivity&#39;]
+tree.F1        &lt;- tree.result$byClass[&#39;F1&#39;]
+
+tree.result</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  0  1
+##          0 76 32
+##          1 39 92
+##                                           
+##                Accuracy : 0.7029          
+##                  95% CI : (0.6406, 0.7601)
+##     No Information Rate : 0.5188          
+##     P-Value [Acc &gt; NIR] : 5.258e-09       
+##                                           
+##                   Kappa : 0.4037          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.4764          
+##                                           
+##             Sensitivity : 0.6609          
+##             Specificity : 0.7419          
+##          Pos Pred Value : 0.7037          
+##          Neg Pred Value : 0.7023          
+##              Prevalence : 0.4812          
+##          Detection Rate : 0.3180          
+##    Detection Prevalence : 0.4519          
+##       Balanced Accuracy : 0.7014          
+##                                           
+##        &#39;Positive&#39; Class : 0               
+## </code></pre>
+</div>
+<div id="random-forest" class="section level2">
+<h2>Random Forest</h2>
+<pre class="r"><code>#Random Forest
+#Train model
+forest.model &lt;- randomForest(diagnose~.,
+                       data = training,
+                       ntree=200,
+                       type=&quot;classification&quot;)
+
+# See error reduction with number of trees (not much gained beyond ~150 trees)
+plot(forest.model)</code></pre>
+<p><img src="Mental_files/figure-html/forest-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Look at the variable Importance from the random forest
+varImpPlot(forest.model, sort = T, main=&quot;Variable Importance&quot;)</code></pre>
+<p><img src="Mental_files/figure-html/forest-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Evaluation metrics
+forest.pred      &lt;- predict(forest.model, newdata = testing, type = &quot;class&quot;)
+forest.result    &lt;- confusionMatrix(data = forest.pred, testing$diagnose)
+forest.precision &lt;- forest.result$byClass[&#39;Pos Pred Value&#39;]
+forest.recall    &lt;- forest.result$byClass[&#39;Sensitivity&#39;]
+forest.F1        &lt;- forest.result$byClass[&#39;F1&#39;]
+
+forest.result</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  0  1
+##          0 76 32
+##          1 39 92
+##                                           
+##                Accuracy : 0.7029          
+##                  95% CI : (0.6406, 0.7601)
+##     No Information Rate : 0.5188          
+##     P-Value [Acc &gt; NIR] : 5.258e-09       
+##                                           
+##                   Kappa : 0.4037          
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.4764          
+##                                           
+##             Sensitivity : 0.6609          
+##             Specificity : 0.7419          
+##          Pos Pred Value : 0.7037          
+##          Neg Pred Value : 0.7023          
+##              Prevalence : 0.4812          
+##          Detection Rate : 0.3180          
+##    Detection Prevalence : 0.4519          
+##       Balanced Accuracy : 0.7014          
+##                                           
+##        &#39;Positive&#39; Class : 0               
+## </code></pre>
+<div id="compare-models" class="section level3">
+<h3>Compare Models</h3>
+<pre class="r"><code>#Evaluate the 3 models
+#Precision
+log.precision</code></pre>
+<pre><code>## Pos Pred Value 
+##      0.7063492</code></pre>
+<pre class="r"><code>tree.precision</code></pre>
+<pre><code>## Pos Pred Value 
+##      0.7037037</code></pre>
+<pre class="r"><code>forest.precision</code></pre>
+<pre><code>## Pos Pred Value 
+##      0.7037037</code></pre>
+<pre class="r"><code>#Recall
+log.recall</code></pre>
+<pre><code>## Sensitivity 
+##   0.7177419</code></pre>
+<pre class="r"><code>tree.recall</code></pre>
+<pre><code>## Sensitivity 
+##   0.6608696</code></pre>
+<pre class="r"><code>forest.recall</code></pre>
+<pre><code>## Sensitivity 
+##   0.6608696</code></pre>
+<pre class="r"><code>#F1 Score
+log.F1</code></pre>
+<pre><code>##    F1 
+## 0.712</code></pre>
+<pre class="r"><code>tree.F1</code></pre>
+<pre><code>##        F1 
+## 0.6816143</code></pre>
+<pre class="r"><code>forest.F1</code></pre>
+<pre><code>##        F1 
+## 0.6816143</code></pre>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>Evaluating the best model, the logistic model has the highest <strong>Precision</strong> and the second highest <strong>recall</strong> (sensitivity). Therefore we can use the logistic regression to predict mental health status of a respondent, granted we have their family mental health history, gender and age.</p>
+<p>Once done, do not forget to disconnect the database from your environment.</p>
+<pre class="r"><code>dbDisconnect(conn)</code></pre>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

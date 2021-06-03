@@ -4,4 +4,6 @@ navbar:
   left:
     - text: "Spam Filter"
       href: index.html
+    - text: "Mental Health"
+      href: Mental.html
 output_dir: "docs"
