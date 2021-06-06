@@ -4,6 +4,8 @@ navbar:
   left:
     - text: "Spam Filter"
       href: index.html
+    - text: "NYC Real Estate"
+      href: NYC-Property-Sales.html
     - text: "Mental Health"
       href: Mental.html
 output_dir: "docs"

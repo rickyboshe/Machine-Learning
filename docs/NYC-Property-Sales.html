@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>NYC Real Estate</title>
+
+<script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Machine Learning</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Spam Filter</a>
+</li>
+<li>
+  <a href="NYC-Property-Sales.html">NYC Real Estate</a>
+</li>
+<li>
+  <a href="Mental.html">Mental Health</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">NYC Real Estate</h1>
+
+</div>
+
+
+<br></br>
+<center>
+<div id="predicting-real-estate-prices-in-new-york-city" class="section level1">
+<h1>Predicting Real Estate Prices in New York City 🏡</h1>
+</center>
+<p>New York city is known to be one of the most expensive cities in the world when it comes to real estate. The city has 5 different <strong>boroughs</strong>, with each having its unique socioeconomic profile that helps determine the real estate prices.</p>
+<iframe title="New York City Boroughs" aria-label="Map" id="datawrapper-chart-S0nLu" src="https://datawrapper.dwcdn.net/S0nLu/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="669">
+</iframe>
+<script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
+</script>
+<p>Using data shared by the <a href="https://www1.nyc.gov/site/finance/taxes/property-rolling-sales-data.page">New York City department of Finance</a>, this project looks to analyze housing costs for the last 12 months and use regression models to predict prices based on indicators.</p>
+<div id="data-manipulation" class="section level2">
+<h2>Data Manipulation</h2>
+<p>The data is found in 4 distinct excel files. Read them to the environment and merge them in a single dataframe, making it easier to handle.</p>
+<div id="data-cleaning" class="section level3">
+<h3>Data Cleaning</h3>
+<pre class="r"><code>#The boroughs are coded (manhattan=1, bronx=2, brooklyn=3, queens=4, staten=5)
+nyc&lt;-bind_rows(manhattan,bronx,brooklyn,queens,staten)
+
+#Recode the boroughs
+nyc&lt;-nyc%&gt;%
+  mutate(
+    BOROUGH=case_when(
+      BOROUGH==&quot;1&quot; ~ &quot;Manhattan&quot;,
+      BOROUGH==&quot;2&quot; ~ &quot;Bronx&quot;,
+      BOROUGH==&quot;3&quot; ~ &quot;Brooklyn&quot;,
+      BOROUGH==&quot;4&quot; ~ &quot;Queens&quot;,
+      BOROUGH==&quot;5&quot; ~ &quot;Staten Island&quot;
+      )
+    )
+
+#remove the individual dataframes
+rm(bronx, brooklyn, manhattan, queens, staten)
+
+#Normalize the column names (lower column names and remove space)
+colnames(nyc)&lt;-str_to_lower(colnames(nyc))%&gt;%
+  str_replace_all(&quot;\\s&quot;, &quot;_&quot;)%&gt;%
+  str_to_title(colnames(nyc))</code></pre>
+<pre><code>## Warning in opts[&quot;locale&quot;] &lt;- locale: number of items to replace is not a
+## multiple of replacement length</code></pre>
+<pre class="r"><code>#some of the properties were exchanged between family members (i.e. filter with a threshold of 10,000$)
+summary(nyc$Sale_price)</code></pre>
+<pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
+##         0         0    470000   1184058    880000 809912583</code></pre>
+<pre class="r"><code>nyc&lt;-nyc%&gt;%
+  filter(Sale_price&gt;10000)
+
+#Some properties have square footage of 0, which is unlikely in reality. Remove
+summary(nyc$Gross_square_feet)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##       0    1300    1791    7190    2544 2400000   22601</code></pre>
+<pre class="r"><code>nyc&lt;-nyc%&gt;%
+  filter(Gross_square_feet&gt;0)
+
+#Initial removal of variables that are not of interest
+nyc&lt;-nyc%&gt;%
+  dplyr::select(-5,-6,-7,-8,-10)</code></pre>
+<p>The initial data cleaning and manipulation helps set the data up ready for exploration and followed by analysis i.e. removing missing observations and exploring the data.</p>
+</div>
+<div id="data-exploration" class="section level3">
+<h3>Data Exploration</h3>
+<pre class="r"><code>plot_intro(nyc, ggtheme = theme_bw())</code></pre>
+<p><img src="NYC-Property-Sales_files/figure-html/explore-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>sum(is.na(nyc$Year_built))</code></pre>
+<pre><code>## [1] 14</code></pre>
+<pre class="r"><code>nyc&lt;-nyc%&gt;%
+  drop_na(Year_built)
+
+table(nyc$Borough)</code></pre>
+<pre><code>## 
+##         Bronx      Brooklyn     Manhattan        Queens Staten Island 
+##          2491          5960           616          8066          4067</code></pre>
+<pre class="r"><code>#Plot continuous and discrete values
+plot_histogram(nyc, ggtheme = theme_bw(), ncol = 2)</code></pre>
+<p><img src="NYC-Property-Sales_files/figure-html/explore-2.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot_bar(nyc, maxcat = 5, 
+         ggtheme = theme_bw())</code></pre>
+<p><img src="NYC-Property-Sales_files/figure-html/explore-3.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Keep only family dwellings only
+nyc&lt;-nyc%&gt;%
+  filter(Building_class_category==&quot;01 ONE FAMILY DWELLINGS&quot; | Building_class_category==&quot;02 TWO FAMILY DWELLINGS&quot; | Building_class_category==&quot;03 THREE FAMILY DWELLINGS&quot;)%&gt;%
+  mutate(Building_class_category=
+           case_when(
+             Building_class_category==&quot;01 ONE FAMILY DWELLINGS&quot; ~ &quot;One Family Dwellings&quot;,
+             Building_class_category==&quot;02 TWO FAMILY DWELLINGS&quot; ~ &quot;Two Family Dwellings&quot;,
+             Building_class_category==&quot;03 THREE FAMILY DWELLINGS&quot; ~ &quot;Three Family Dwellings&quot;
+             )
+         )
+
+table(nyc$Borough)</code></pre>
+<pre><code>## 
+##         Bronx      Brooklyn     Manhattan        Queens Staten Island 
+##          2123          4961           148          7499          3965</code></pre>
+<pre class="r"><code>plot_bar(nyc, maxcat = 5,
+         ncol = 2,
+         ggtheme = theme_bw())</code></pre>
+<p><img src="NYC-Property-Sales_files/figure-html/explore-4.png" width="768" style="display: block; margin: auto;" /> Very few missing observations (14), and they seem to be from the <em>Year Built</em> column. We can go ahead and remove them since they make up just 0.04% of the data.</p>
+<p>You can also observe that most variables have very huge outliers that skew their charts positively. Going forward, we might need to deal with the outliers. One potential way is by keeping just residential dwellings (building codes can be found <a href="https://www1.nyc.gov/assets/finance/jump/hlpbldgcode.html">here</a>). Manhattan will see a considerable drop in observations (<span style="color: red;">76%</span>) while the least drop in observations was for Staten Island (<span style="color: red;">2%</span>).</p>
+</div>
+<div id="data-outliers" class="section level3">
+<h3>Data Outliers</h3>
+<pre class="r"><code>#Residential Units
+quartiles &lt;- quantile(nyc$Residential_units)
+# 75% minus 25% = interquartile range 
+iqr &lt;- quartiles[[4]] - quartiles[[2]]
+# Outlier boundaries
+lower_bound &lt;- quartiles[[2]] - (1.5 * iqr)
+upper_bound &lt;- quartiles[[4]] + (1.5 * iqr)
+
+# Isolate outlier(s)
+res.outliers &lt;- nyc%&gt;% 
+  filter(Residential_units &gt; upper_bound | Residential_units&lt; lower_bound)
+
+#Land
+quartiles &lt;- quantile(nyc$Land_square_feet)
+iqr &lt;- quartiles[[4]] - quartiles[[2]]
+lower_bound &lt;- quartiles[[2]] - (1.5 * iqr)
+upper_bound &lt;- quartiles[[4]] + (1.5 * iqr)
+
+land.outliers &lt;- nyc%&gt;% 
+  filter(Land_square_feet &gt; upper_bound | Land_square_feet&lt; lower_bound)
+
+#Price
+quartiles &lt;- quantile(nyc$Sale_price)
+iqr &lt;- quartiles[[4]] - quartiles[[2]]
+lower_bound &lt;- quartiles[[2]] - (1.5 * iqr)
+upper_bound &lt;- quartiles[[4]] + (1.5 * iqr)
+
+price.outliers &lt;- nyc%&gt;% 
+  filter(Borough==&quot;Bronx&quot;)%&gt;%
+  filter(Sale_price &gt; upper_bound | Sale_price&lt; lower_bound)
+
+#Bronx has two duplicate outliers, remove them
+nyc&lt;-nyc%&gt;%
+  filter(Sale_price!=87400000)
+
+#remove duplicates
+nyc&lt;-nyc%&gt;%
+  distinct()</code></pre>
+</div>
+</div>
+<div id="modeling" class="section level2">
+<h2>Modeling</h2>
+<p>To successfully model real estate prices we must select the best predictor variables (independent variables) that will best explain the prices.</p>
+<div id="factor-selection" class="section level3">
+<h3>Factor selection</h3>
+<p>As OLS assumes no multicollinearity between independent variables, a correlation matrix helps us identify variables that are strongly correlated and thus removable. In our case, <em>Total Units</em> is highly correlated with <em>Residential units</em> and mildly correlated with <em>Gross Square Feet</em>. We therefore remove <em>Total Units</em> from the equation.</p>
+<pre class="r"><code>#Recode columns to proper data types
+nyc&lt;-nyc%&gt;%
+  mutate(Borough=as.factor(Borough),
+         Neighborhood=as.factor(Neighborhood),
+         Tax_class_at_time_of_sale=as.factor(Tax_class_at_time_of_sale),
+         Zip_code=as.factor(Zip_code),
+         Building_class_at_time_of_sale=as.factor(Building_class_at_time_of_sale),
+         Building_class_category=as.factor(Building_class_category))
+nyc$Address&lt;-NULL
+nyc$Neighborhood&lt;-NULL
+nyc$Zip_code&lt;-NULL
+nyc$Tax_class_at_present&lt;-NULL
+
+#Check for multicollinearity
+numnyc &lt;- names(which(sapply(nyc, is.numeric)))
+corr &lt;- cor(nyc[,numnyc], use = &#39;pairwise.complete.obs&#39;)
+p3&lt;-ggcorrplot(corr, lab = TRUE)
+p3</code></pre>
+<p><img src="NYC-Property-Sales_files/figure-html/factor-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>#Total units has strong relationship with Residential units, so i shall remove it
+nyc$Total_units&lt;-NULL
+
+#Visualize relationship between sale price and gross size
+nyc%&gt;%ggplot(aes(x=Gross_square_feet, y=Sale_price, color=Borough))+
+  geom_point()+
+  theme_bw()+
+  geom_smooth(method = &quot;lm&quot;, se = FALSE)+
+  theme(legend.position = &quot;none&quot;)+
+  facet_wrap(~Borough, ncol = 2, scales = &quot;free&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="NYC-Property-Sales_files/figure-html/factor-2.png" width="768" style="display: block; margin: auto;" /></p>
+<p>It is important to model each borough individually as they are different in terms of socio-economic profile. It is logical that each borough would have its own price drivers. We can do this using <em>nesting</em> techniques.</p>
+</div>
+<div id="regression" class="section level3">
+<h3>Regression</h3>
+<p>Taking an overall regression for the full dataset, we see the model helps explain 43% of the observations significantly. As mentioned earlier, it would be wise to seperate observations by Borough and run seperate models for each Borough.</p>
+<pre class="r"><code>#Regression with two most important factors, Borough and gross size of property
+nyc_fit&lt;-lm(Sale_price~Borough+Gross_square_feet, data=nyc)
+summ(nyc_fit)</code></pre>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Observations
+</td>
+<td style="text-align:right;">
+18694
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Dependent variable
+</td>
+<td style="text-align:right;">
+Sale_price
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Type
+</td>
+<td style="text-align:right;">
+OLS linear regression
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+F(5,18688)
+</td>
+<td style="text-align:right;">
+2821.81
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+R²
+</td>
+<td style="text-align:right;">
+0.43
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Adj. R²
+</td>
+<td style="text-align:right;">
+0.43
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Est.
+</th>
+<th style="text-align:right;">
+S.E.
+</th>
+<th style="text-align:right;">
+t val.
+</th>
+<th style="text-align:right;">
+p
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+-420293.81
+</td>
+<td style="text-align:right;">
+25003.92
+</td>
+<td style="text-align:right;">
+-16.81
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+BoroughBrooklyn
+</td>
+<td style="text-align:right;">
+536145.35
+</td>
+<td style="text-align:right;">
+22267.41
+</td>
+<td style="text-align:right;">
+24.08
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+BoroughManhattan
+</td>
+<td style="text-align:right;">
+5627046.36
+</td>
+<td style="text-align:right;">
+75272.96
+</td>
+<td style="text-align:right;">
+74.76
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+BoroughQueens
+</td>
+<td style="text-align:right;">
+348373.75
+</td>
+<td style="text-align:right;">
+21333.20
+</td>
+<td style="text-align:right;">
+16.33
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+BoroughStaten Island
+</td>
+<td style="text-align:right;">
+173173.65
+</td>
+<td style="text-align:right;">
+23286.41
+</td>
+<td style="text-align:right;">
+7.44
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;">
+Gross_square_feet
+</td>
+<td style="text-align:right;">
+502.60
+</td>
+<td style="text-align:right;">
+7.89
+</td>
+<td style="text-align:right;">
+63.71
+</td>
+<td style="text-align:right;">
+0.00
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> Standard errors: OLS
+</td>
+</tr>
+</tfoot>
+</table>
+<pre class="r"><code>#Best model by Borough (Generate multiple linear models)
+##First nest data by the category
+nyc_nest&lt;-nyc%&gt;%
+  group_by(Borough)%&gt;%
+  nest()
+
+##Second run a liner regression across all categories, using a mapping function
+nyc_nest&lt;-nyc_nest%&gt;%
+  mutate(linear_model=map(.x= data, 
+                          .f= ~lm(Sale_price~+Gross_square_feet, data=.)
+                          ))
+
+##Third select the broom function suitable
+#a) Tidy the data
+nyc_nest&lt;-nyc_nest%&gt;%
+  mutate(tidy_coef=map(.x=linear_model,
+                       .f=tidy, conf.int=TRUE))
+
+#Fourth we Unnest
+p_borough&lt;-nyc_nest%&gt;%
+  dplyr::select(Borough, tidy_coef)%&gt;%
+  unnest(cols = tidy_coef)%&gt;%
+  filter(term==&quot;Gross_square_feet&quot;)%&gt;%
+  arrange(estimate)
+
+panderOptions(&#39;table.split.table&#39;, 300)
+pander(p_borough, round=3, caption=&quot;&lt;b&gt;Change in Real Estate prices per increase in square foot by Borough&lt;/b&gt;&quot;)</code></pre>
+<table>
+<caption><b>Change in Real Estate prices per increase in square foot by Borough</b></caption>
+<colgroup>
+<col width="15%" />
+<col width="19%" />
+<col width="10%" />
+<col width="11%" />
+<col width="11%" />
+<col width="9%" />
+<col width="10%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Borough</th>
+<th align="center">term</th>
+<th align="center">estimate</th>
+<th align="center">std.error</th>
+<th align="center">statistic</th>
+<th align="center">p.value</th>
+<th align="center">conf.low</th>
+<th align="center">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Bronx</td>
+<td align="center">Gross_square_feet</td>
+<td align="center">160.2</td>
+<td align="center">6.94</td>
+<td align="center">23.09</td>
+<td align="center">0</td>
+<td align="center">146.6</td>
+<td align="center">173.8</td>
+</tr>
+<tr class="even">
+<td align="center">Staten Island</td>
+<td align="center">Gross_square_feet</td>
+<td align="center">229.3</td>
+<td align="center">3.512</td>
+<td align="center">65.3</td>
+<td align="center">0</td>
+<td align="center">222.4</td>
+<td align="center">236.2</td>
+</tr>
+<tr class="odd">
+<td align="center">Queens</td>
+<td align="center">Gross_square_feet</td>
+<td align="center">288.2</td>
+<td align="center">5.138</td>
+<td align="center">56.08</td>
+<td align="center">0</td>
+<td align="center">278.1</td>
+<td align="center">298.3</td>
+</tr>
+<tr class="even">
+<td align="center">Brooklyn</td>
+<td align="center">Gross_square_feet</td>
+<td align="center">557.7</td>
+<td align="center">16.38</td>
+<td align="center">34.06</td>
+<td align="center">0</td>
+<td align="center">525.6</td>
+<td align="center">589.8</td>
+</tr>
+<tr class="odd">
+<td align="center">Manhattan</td>
+<td align="center">Gross_square_feet</td>
+<td align="center">2499</td>
+<td align="center">180.6</td>
+<td align="center">13.84</td>
+<td align="center">0</td>
+<td align="center">2142</td>
+<td align="center">2856</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#a) glance the data (this has r-squared)
+nyc_nest&lt;-nyc_nest%&gt;%
+  mutate(glance_coef=map(.x=linear_model,
+                       .f=glance))
+
+#we Unnest
+r_borough&lt;-nyc_nest%&gt;%
+  dplyr::select(Borough, glance_coef)%&gt;%
+  unnest(cols = glance_coef)%&gt;%
+  dplyr::select(r.squared, adj.r.squared, p.value, AIC, BIC)%&gt;%
+  arrange(r.squared)
+
+panderOptions(&#39;table.split.table&#39;, 300)
+pander(r_borough, round=3, caption=&quot;&lt;b&gt;How well Real Estate prices can be explained by the model for each Borough&lt;/b&gt;&quot;)</code></pre>
+<table>
+<caption><b>How well Real Estate prices can be explained by the model for each Borough</b></caption>
+<colgroup>
+<col width="22%" />
+<col width="16%" />
+<col width="22%" />
+<col width="13%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Borough</th>
+<th align="center">r.squared</th>
+<th align="center">adj.r.squared</th>
+<th align="center">p.value</th>
+<th align="center">AIC</th>
+<th align="center">BIC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Brooklyn</td>
+<td align="center">0.19</td>
+<td align="center">0.189</td>
+<td align="center">0</td>
+<td align="center">151233</td>
+<td align="center">151253</td>
+</tr>
+<tr class="even">
+<td align="center">Bronx</td>
+<td align="center">0.201</td>
+<td align="center">0.201</td>
+<td align="center">0</td>
+<td align="center">58880</td>
+<td align="center">58897</td>
+</tr>
+<tr class="odd">
+<td align="center">Queens</td>
+<td align="center">0.296</td>
+<td align="center">0.295</td>
+<td align="center">0</td>
+<td align="center">210044</td>
+<td align="center">210065</td>
+</tr>
+<tr class="even">
+<td align="center">Staten Island</td>
+<td align="center">0.518</td>
+<td align="center">0.518</td>
+<td align="center">0</td>
+<td align="center">107161</td>
+<td align="center">107179</td>
+</tr>
+<tr class="odd">
+<td align="center">Manhattan</td>
+<td align="center">0.567</td>
+<td align="center">0.564</td>
+<td align="center">0</td>
+<td align="center">5002</td>
+<td align="center">5011</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>Not surprising that Manhattan has the highest increase in real estate price for each increase square foot of the property. Bronx has the smallest increase. Manhattan also has the best model fit, meaning 56% of the observation prices can be explained by the model. While for Brooklyn it is just 19% of the observations. This means there might be other price drives that we did not catch in our dataset.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

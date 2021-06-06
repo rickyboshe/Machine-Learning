@@ -20,7 +20,7 @@ Over the past year we have heard about just how much the pandemic has exacerbate
 The social isolation, community lockdown and grim newsfeeds filled with pandemic casualties all paid a heavy toll on our mental health.This has led to health authorities such as the CDC issuing guidelines on how to [cope with stress](https://www.cdc.gov/coronavirus/2019-ncov/daily-life-coping/managing-stress-anxiety.html).
 
 
-With this in mind, i decided to analyze what were the mental health trends **before** the pandemic, looking into in the tech industry which has been know to have serious mental health issues for its employees. Using data from [Open Source Mental Illness (OSMI)](https://www.kaggle.com/anth7310/mental-health-in-the-tech-industry) using survey data from years 2014, 2016, 2017, 2018 and 2019. The data is on a database as it contains multiple tables. I will use SQLite queries to extract the variables of interest and continue with R script to analyze and visualize the relationships and patterns between the indicators. 
+I decided to analyze what were the mental health trends **before** the pandemic, looking into in the tech industry which has been know to have serious mental health issues for its employees. Using data from [Open Source Mental Illness (OSMI)](https://www.kaggle.com/anth7310/mental-health-in-the-tech-industry) which surveyed respondents from years 2014, 2016, 2017, 2018 and 2019. The data is on a database as it contains multiple tables. I will use SQLite queries to extract the variables of interest and continue with R script to analyze and visualize the relationships and patterns between the indicators. 
 
 
 ```{r packages, include=FALSE, message=FALSE, warning=FALSE}
@@ -62,6 +62,7 @@ registerDoParallel(cores=4)
 ```
 
 
+### Data Import
 After downloading the database, load it/create a connection within an R markdown chunk. You can declare the connection within the setup chunk and you wont need to constantly declare it in every subsequent chunk. 
 ```{r database, include=TRUE}
 conn<-dbConnect(SQLite(), "mental_health.sqlite")
@@ -97,6 +98,8 @@ As you can see, this full dataset would have 107 variables! Clearly we have no i
 
 
 The indicators of interest for this analysis are:
+
+
 1.  Age
 2.  Gender
 3.  Location
@@ -106,13 +109,15 @@ The indicators of interest for this analysis are:
 7.  Race
 
 
+**Sample Questions from the Survey**
 ```{sql, connection=conn, include=TRUE}
 --You can preview the available indicators per survey year (e.g. the variables for 2016)
 select Q.questiontext
 from Question as Q
 Left join Answer as A on A.QuestionID = Q.questionid
 Where A.SurveyID=2016
-group by questiontext;
+group by questiontext
+LIMIT 3;
 ```
 
 ```{r, include=TRUE, warning=FALSE, message=FALSE,echo=FALSE, fig.align='center'}
