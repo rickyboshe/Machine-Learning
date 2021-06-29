@@ -811,11 +811,124 @@ race
 </tbody>
 </table>
 <p>Taking multiple Chi-square tests to check for independence of mental health diagnosis on gender, family history, race and remote work we can observe some relationships.</p>
-<p><strong>Gender:</strong> For the 2016 and 2017 surveys, we can reject the <em>null hypothesis</em> of independence between gender and mental health diagnosis. We fail to reject the null hypothesis for the survey year 2017.</p>
-<p><strong>Family history:</strong> For the 2016 and 2017 surveys, we can reject the <em>null hypothesis</em> of independence between family history and mental health diagnosis. We fail to reject the null hypothesis for the survey year 2017.</p>
-<p><strong>Remote work:</strong> Only 2016 and 2017 surveys have information on working remotely. As the p-values are above the threshold, we fail to reject the <em>null hypothesis</em> of independence between working remotely and mental health diagnosis. It would seem working remotely is not a good predictor for the state of mental health for employees in this dataset.</p>
+<p><strong>Gender:</strong> For the 2014 and 2016 surveys, we can reject the <em>null hypothesis</em> of independence between gender and mental health diagnosis. We fail to reject the null hypothesis for the survey year 2017.</p>
+<p><strong>Family history:</strong> For the 2014 and 2016 surveys, we can reject the <em>null hypothesis</em> of independence between family history and mental health diagnosis. We fail to reject the null hypothesis for the survey year 2017.</p>
+<p><strong>Remote work:</strong> Only 2014 and 2016 surveys have information on working remotely. As the p-values are above the threshold, we fail to reject the <em>null hypothesis</em> of independence between working remotely and mental health diagnosis. It would seem working remotely is not a good predictor for the state of mental health for employees in this dataset.</p>
 <p><strong>Race:</strong> The 2017 dataset has information on race but after running the chi-squared test, we fail to reject the <em>null hypothesis</em> of independence between race and mental health diagnosis.</p>
 <p><strong>Location:</strong> This variable is significant and not independent in the 2014 dataset. Its p-values in 2016 and 2017 are too high meaning we fail to reject the <em>null hypothesis</em> of independence between location and mental health diagnosis.</p>
+<p>It would appear there is no significant relationship for our variables of interest within the 2017 dataset. This can be explained by the very low frequency of respondents that had a mental health diagnosis, as compared to 2016 and 2014. The distribution of respondents is more balanced in 2014 and 2016.</p>
+</div>
+<div id="balance-of-data" class="section level3">
+<h3>Balance of Data</h3>
+<pre class="r"><code>prop_2014&lt;-round(prop.table(table(df.2014$diagnose)), 3)
+knitr::kable(prop_2014, caption = &quot;Share of employees diagnosed with mental health problems (2014)&quot;)%&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Share of employees diagnosed with mental health problems (2014)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Var1
+</th>
+<th style="text-align:right;">
+Freq
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+0.476
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+0.524
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>prop_2016&lt;-round(prop.table(table(df.2016$diagnose)),3)
+knitr::kable(prop_2016, caption = &quot;Share of employees diagnosed with mental health problems (2016)&quot;)%&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Share of employees diagnosed with mental health problems (2016)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Var1
+</th>
+<th style="text-align:right;">
+Freq
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+0.483
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+0.517
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>prop_2017&lt;-round(prop.table(table(df.2017$diagnose)),3)
+knitr::kable(prop_2017, caption = &quot;Share of employees diagnosed with mental health problems (2017)&quot;)%&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Share of employees diagnosed with mental health problems (2017)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Var1
+</th>
+<th style="text-align:right;">
+Freq
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+0.884
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+0.116
+</td>
+</tr>
+</tbody>
+</table>
+<p>The 2014 and 2016 datasets have a good balance of data with the share of respondents with a diagnose of mental health issues at 52% for both. But the 2017 dataset is very unbalanced with just 12% with a diagnose of mental health.</p>
 <pre class="r"><code>p1&lt;-df.2014%&gt;%
   ggplot(aes(x=diagnose, fill=gender))+
   geom_histogram(stat = &quot;count&quot;)+
@@ -851,28 +964,10 @@ grid.arrange(arrangeGrob(p1,p2, ncol = 2),
              heights=c(3.5/4, 3.5/4), ncol=1,
              p3,nrow=2, top=textGrob(&quot;Diagnosed with a mental health issues&quot;,gp=gpar(cex=1.5,col=&quot;black&quot;)))</code></pre>
 <p><img src="Mental_files/figure-html/freq-1.png" width="768" style="display: block; margin: auto;" /></p>
-<p>It would appear there is not significant relationship for our variables of interest within the 2017 dataset. This can be explained by the very low frequency of respondents that had a mental health diagnosis, as compared to 2016 and 2014. The distribution of respondents is more balanced in 2014 and 2016.</p>
-</div>
-<div id="balance-of-data" class="section level3">
-<h3>Balance of Data</h3>
-<pre class="r"><code>round(prop.table(table(df.2014$diagnose)),3)</code></pre>
-<pre><code>## 
-##    No   Yes 
-## 0.476 0.524</code></pre>
-<pre class="r"><code>round(prop.table(table(df.2016$diagnose)),3)</code></pre>
-<pre><code>## 
-##    No   Yes 
-## 0.483 0.517</code></pre>
-<pre class="r"><code>round(prop.table(table(df.2017$diagnose)),3)</code></pre>
-<pre><code>## 
-##    No   Yes 
-## 0.884 0.116</code></pre>
 <pre class="r"><code>rm(df.2014, df.2017)
-
 df.2016$remote_wrk&lt;-NULL</code></pre>
-<p>The 2014 and 2016 datasets have a good balance of data with the share of respondents with a diagnose of mental health issues at 48% for both. But the 2017 dataset is very unbalanced with just 12% with a diagnose of mental health.</p>
 <p>It is clear that due to its poor sampling, the 2017 data set would be of very little value to us. Also the remote work variable has little to not relationship to the mental health of workers. Therefore the 2017 dataset was removed.</p>
-<p>As <em>location</em> was only significant in the 2016 dataset, it would be ill advised to combine the 2016 and 2014 datasets. The are to be analyzed separately. I decided to remain with the 2016 dataset as it has more observations.</p>
+<p>As <em>location</em> was only significant in the 2016 dataset, it would be ill advised to combine the 2014 and 2016 datasets. The are to be analyzed separately. I decided to remain with the 2016 dataset as it has more observations.</p>
 </div>
 <div id="model" class="section level2">
 <h2>Model</h2>
@@ -1575,7 +1670,7 @@ log.result</code></pre>
 <p><strong>Age:</strong> As age increases, respondents were slightly more likely to have been diagnosed with mental health issues.</p>
 <p><strong>Gender:</strong> Men were less likely to have been diagnosed with mental health issues as compared to women respondents.</p>
 <p><strong>Family history:</strong> People with a family history of mental health issues are more likely to also be diagnosed with mental health issues.</p>
-<p>A feature analysis shows that gender and family history are the strongest predictors of mental health in the survey response. In fact, an odds ratio analysis shows that if a respondent has a family history of mental health issues, they are <span style="color: red;"><strong>5 times</strong></span> more likely to also be diagnosed with mental health issues. Meanwhile, if a respondent is male, they are <span style="color: red;"><strong>half</strong></span> as likely as women to have diagnosed with mental health issues.</p>
+<p>A feature analysis shows that gender and family history are the strongest predictors of mental health in the survey response. In fact, if a respondent has a family history of mental health issues, the odds of the respondent having mental health problems increases by a <span style="color: red;"><strong>factor of 2.7</strong></span>. Meanwhile, if a respondent is male, they are <span style="color: red;"><strong>half</strong></span> as likely as women to have diagnosed with mental health issues.</p>
 </div>
 </div>
 <div id="decision-tree" class="section level2">
