@@ -966,6 +966,112 @@ grid.arrange(arrangeGrob(p1,p2, ncol = 2),
 <p><img src="Mental_files/figure-html/freq-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>rm(df.2014, df.2017)
 df.2016$remote_wrk&lt;-NULL</code></pre>
+<pre class="r"><code>#Total 2014
+fig1&lt;-df.2014%&gt;%
+  count(diagnose)%&gt;%
+  ggplot(aes(x=reorder(diagnose, n), y = n, 
+             fill=diagnose))+
+  geom_bar(stat = &quot;identity&quot;)+
+  theme_minimal()+
+  theme(plot.title = element_text(color=&quot;black&quot;, size=12, 
+                                  face=&quot;bold&quot;, hjust = 0.5),
+        axis.ticks = element_blank(),
+        axis.title.x = element_text(color=&quot;black&quot;, size=12),
+        axis.title.y = element_blank(),
+        legend.position = &quot;none&quot;)+
+  scale_y_continuous(expand = c(0, 0))+
+  coord_flip() +
+  geom_col(alpha = 0.8, width = 0.85) +
+  labs(title = &quot;Number of respondents with diagnosed \nmental health issues (2014)&quot;,
+       x=&quot;&quot;,
+       y=&quot;Respondents&quot;)
+
+#Total 2016
+df.2016&lt;-df.2016%&gt;%
+  mutate(diagnose=ifelse(diagnose==1, &quot;Yes&quot;, &quot;No&quot;))
+
+fig2&lt;-df.2016%&gt;%
+  count(diagnose)%&gt;%
+  ggplot(aes(x=reorder(diagnose, n), y = n, 
+             fill=diagnose))+
+  geom_bar(stat = &quot;identity&quot;)+
+  theme_minimal()+
+  theme(plot.title = element_text(color=&quot;black&quot;, size=12, 
+                                  face=&quot;bold&quot;, hjust = 0.5),
+        axis.ticks = element_blank(),
+        axis.title.x = element_text(color=&quot;black&quot;, size=12),
+        axis.title.y = element_blank(),
+        legend.position = &quot;none&quot;)+
+  scale_y_continuous(expand = c(0, 0))+
+  coord_flip() +
+  geom_col(alpha = 0.8, width = 0.85) +
+  labs(title = &quot;Number of respondents with diagnosed \nmental health issues (2016)&quot;,
+       x=&quot;&quot;,
+       y=&quot;Respondents&quot;)
+
+#Share 2014
+
+plotdata &lt;- df.2014%&gt;%
+  group_by(diagnose, gender)%&gt;%
+  summarize(n = n())%&gt;% 
+  mutate(pct = n/sum(n),
+         lbl = scales::percent(pct))
+
+fig3&lt;-plotdata%&gt;%
+  ggplot(aes(x=diagnose, y=pct, fill=gender))+
+  geom_bar(stat = &quot;identity&quot;, position = &quot;fill&quot;)+
+  theme_minimal()+
+  theme(plot.title = element_text(color=&quot;black&quot;, size=12, 
+                                  face=&quot;bold&quot;, hjust = 0.5),
+        axis.ticks = element_blank(),
+        legend.title = element_blank(),
+        axis.title.x = element_text(color=&quot;black&quot;, size=12, face=&quot;bold&quot;),
+        axis.title.y = element_text(color=&quot;black&quot;, size=12))+
+  scale_y_continuous(breaks = seq(0, 1, .2),label = percent)+
+  geom_text(aes(label = lbl), size = 4, 
+            position = position_stack(vjust = 0.5))+
+  geom_col(alpha = 0.2, width = 0.85) +
+  labs(title = &quot;Gendered share of respondents with \nmental health issues (2014)&quot;,
+       x=&quot;&quot;,
+       y=&quot;Percent&quot;)
+
+#Share 2016
+plotdata &lt;- df.2016%&gt;%
+  group_by(diagnose, gender)%&gt;%
+  summarize(n = n())%&gt;% 
+  mutate(pct = n/sum(n),
+         lbl = scales::percent(pct))
+
+fig4&lt;-plotdata%&gt;%
+  ggplot(aes(x=diagnose, y=pct, fill=gender))+
+  geom_bar(stat = &quot;identity&quot;, position = &quot;fill&quot;)+
+  theme_minimal()+
+  theme(plot.title = element_text(color=&quot;black&quot;, size=12, 
+                                  face=&quot;bold&quot;, hjust = 0.5),
+        axis.ticks = element_blank(),
+        legend.title = element_blank(),
+        axis.title.x = element_text(color=&quot;black&quot;, size=12, face=&quot;bold&quot;),
+        axis.title.y = element_text(color=&quot;black&quot;, size=12))+
+  scale_y_continuous(breaks = seq(0, 1, .2),label = percent)+
+  geom_text(aes(label = lbl), size = 4, 
+            position = position_stack(vjust = 0.5))+
+  geom_col(alpha = 0.2, width = 0.85) +
+  labs(title = &quot;Gendered share of respondents with \nmental health issues (2016)&quot;,
+       x=&quot;&quot;,
+       y=&quot;Percent&quot;)
+
+#By country 2014
+plotdata &lt;- df.2014%&gt;%
+  group_by(diagnose, location)%&gt;%
+  summarize(n = n())%&gt;% 
+  mutate(pct = n/sum(n),
+         lbl = scales::percent(pct))
+
+plotdata2 &lt;- df.2016%&gt;%
+  group_by(diagnose, location)%&gt;%
+  summarize(n = n())%&gt;% 
+  mutate(pct = n/sum(n),
+         lbl = scales::percent(pct))</code></pre>
 <p>It is clear that due to its poor sampling, the 2017 data set would be of very little value to us. Also the remote work variable has little to not relationship to the mental health of workers. Therefore the 2017 dataset was removed.</p>
 <p>As <em>location</em> was only significant in the 2016 dataset, it would be ill advised to combine the 2014 and 2016 datasets. The are to be analyzed separately. I decided to remain with the 2016 dataset as it has more observations.</p>
 </div>

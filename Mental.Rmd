@@ -56,6 +56,7 @@ library(readxl)
 library(oddsratio)
 library(partykit)
 library(jtools)
+library(scales)
 library(kableExtra)
 library(knitr)
 registerDoParallel(cores=4)
@@ -405,8 +406,6 @@ prop_2017<-round(prop.table(table(df.2017$diagnose)),3)
 knitr::kable(prop_2017, caption = "Share of employees diagnosed with mental health problems (2017)")%>% 
   kable_styling()
 
-
-
 ```
 
 
@@ -450,6 +449,117 @@ grid.arrange(arrangeGrob(p1,p2, ncol = 2),
   
 rm(df.2014, df.2017)
 df.2016$remote_wrk<-NULL
+```
+
+
+```{r, eval=FALSE}
+#Total 2014
+fig1<-df.2014%>%
+  count(diagnose)%>%
+  ggplot(aes(x=reorder(diagnose, n), y = n, 
+             fill=diagnose))+
+  geom_bar(stat = "identity")+
+  theme_minimal()+
+  theme(plot.title = element_text(color="black", size=12, 
+                                  face="bold", hjust = 0.5),
+        axis.ticks = element_blank(),
+        axis.title.x = element_text(color="black", size=12),
+        axis.title.y = element_blank(),
+        legend.position = "none")+
+  scale_y_continuous(expand = c(0, 0))+
+  coord_flip() +
+  geom_col(alpha = 0.8, width = 0.85) +
+  labs(title = "Number of respondents with diagnosed \nmental health issues (2014)",
+       x="",
+       y="Respondents")
+
+#Total 2016
+df.2016<-df.2016%>%
+  mutate(diagnose=ifelse(diagnose==1, "Yes", "No"))
+
+fig2<-df.2016%>%
+  count(diagnose)%>%
+  ggplot(aes(x=reorder(diagnose, n), y = n, 
+             fill=diagnose))+
+  geom_bar(stat = "identity")+
+  theme_minimal()+
+  theme(plot.title = element_text(color="black", size=12, 
+                                  face="bold", hjust = 0.5),
+        axis.ticks = element_blank(),
+        axis.title.x = element_text(color="black", size=12),
+        axis.title.y = element_blank(),
+        legend.position = "none")+
+  scale_y_continuous(expand = c(0, 0))+
+  coord_flip() +
+  geom_col(alpha = 0.8, width = 0.85) +
+  labs(title = "Number of respondents with diagnosed \nmental health issues (2016)",
+       x="",
+       y="Respondents")
+
+#Share 2014
+
+plotdata <- df.2014%>%
+  group_by(diagnose, gender)%>%
+  summarize(n = n())%>% 
+  mutate(pct = n/sum(n),
+         lbl = scales::percent(pct))
+
+fig3<-plotdata%>%
+  ggplot(aes(x=diagnose, y=pct, fill=gender))+
+  geom_bar(stat = "identity", position = "fill")+
+  theme_minimal()+
+  theme(plot.title = element_text(color="black", size=12, 
+                                  face="bold", hjust = 0.5),
+        axis.ticks = element_blank(),
+        legend.title = element_blank(),
+        axis.title.x = element_text(color="black", size=12, face="bold"),
+        axis.title.y = element_text(color="black", size=12))+
+  scale_y_continuous(breaks = seq(0, 1, .2),label = percent)+
+  geom_text(aes(label = lbl), size = 4, 
+            position = position_stack(vjust = 0.5))+
+  geom_col(alpha = 0.2, width = 0.85) +
+  labs(title = "Gendered share of respondents with \nmental health issues (2014)",
+       x="",
+       y="Percent")
+
+#Share 2016
+plotdata <- df.2016%>%
+  group_by(diagnose, gender)%>%
+  summarize(n = n())%>% 
+  mutate(pct = n/sum(n),
+         lbl = scales::percent(pct))
+
+fig4<-plotdata%>%
+  ggplot(aes(x=diagnose, y=pct, fill=gender))+
+  geom_bar(stat = "identity", position = "fill")+
+  theme_minimal()+
+  theme(plot.title = element_text(color="black", size=12, 
+                                  face="bold", hjust = 0.5),
+        axis.ticks = element_blank(),
+        legend.title = element_blank(),
+        axis.title.x = element_text(color="black", size=12, face="bold"),
+        axis.title.y = element_text(color="black", size=12))+
+  scale_y_continuous(breaks = seq(0, 1, .2),label = percent)+
+  geom_text(aes(label = lbl), size = 4, 
+            position = position_stack(vjust = 0.5))+
+  geom_col(alpha = 0.2, width = 0.85) +
+  labs(title = "Gendered share of respondents with \nmental health issues (2016)",
+       x="",
+       y="Percent")
+
+#By country 2014
+plotdata <- df.2014%>%
+  group_by(diagnose, location)%>%
+  summarize(n = n())%>% 
+  mutate(pct = n/sum(n),
+         lbl = scales::percent(pct))
+
+plotdata2 <- df.2016%>%
+  group_by(diagnose, location)%>%
+  summarize(n = n())%>% 
+  mutate(pct = n/sum(n),
+         lbl = scales::percent(pct))
+
 ```
 
 It is clear that due to its poor sampling, the 2017 data set would be of very little value to us. Also the remote work variable has little to not relationship to the mental health of workers. Therefore the 2017 dataset was removed. 
