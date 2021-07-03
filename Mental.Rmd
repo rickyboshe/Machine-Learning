@@ -562,6 +562,64 @@ plotdata2 <- df.2016%>%
 
 ```
 
+
+
+```{r, eval=FALSE}
+#Share 2014
+
+plotdata1 <- df.2014%>%
+  group_by(diagnose, fam_history_MI)%>%
+  summarize(n = n())%>% 
+  mutate(pct = n/sum(n),
+         lbl = scales::percent(pct))
+
+fig3<-plotdata1%>%
+  rename(`Family history`=fam_history_MI)%>%
+  ggplot(aes(x=diagnose, y=pct, fill=`Family history`))+
+  geom_bar(stat = "identity", position = "fill")+
+  theme_minimal()+
+  theme(plot.title = element_text(color="black", size=12, 
+                                  face="bold", hjust = 0.5),
+        axis.ticks = element_blank(),
+        axis.title.x = element_text(color="black", size=12),
+        axis.title.y = element_text(color="black", size=12))+
+  scale_y_continuous(breaks = seq(0, 1, .2),label = percent)+
+  geom_text(aes(label = lbl), size = 4, 
+            position = position_stack(vjust = 0.5))+
+  geom_col(alpha = 0.2, width = 0.85) +
+  labs(title = "Mental health well-being for respondents with \nfamily history of mental health disorders (2014)",
+       x="Mental health disorder",
+       y="Percent")
+
+#Share 2016
+plotdata2 <- df.2016%>%
+  group_by(diagnose, fam_history_MI)%>%
+  filter(fam_history_MI!="I don't know")%>%
+  summarize(n = n())%>% 
+  mutate(pct = n/sum(n),
+         lbl = scales::percent(pct))
+
+fig4<-plotdata2%>%
+  rename(`Family history`=fam_history_MI)%>%
+  filter(`Family history`!="I don't know")%>%
+  ggplot(aes(x=diagnose, y=pct, fill=`Family history`))+
+  geom_bar(stat = "identity", position = "fill")+
+  theme_minimal()+
+  theme(plot.title = element_text(color="black", size=12, 
+                                  face="bold", hjust = 0.5),
+        axis.ticks = element_blank(),
+        axis.title.x = element_text(color="black", size=12),
+        axis.title.y = element_text(color="black", size=12))+
+  scale_y_continuous(breaks = seq(0, 1, .2),label = percent)+
+  geom_text(aes(label = lbl), size = 4, 
+            position = position_stack(vjust = 0.5))+
+  geom_col(alpha = 0.2, width = 0.85) +
+  labs(title = "Mental health well-being for respondents with \nfamily history of mental health disorders (2016)",
+       x="Mental health disorder",
+       y="Percent")
+
+```
+
 It is clear that due to its poor sampling, the 2017 data set would be of very little value to us. Also the remote work variable has little to not relationship to the mental health of workers. Therefore the 2017 dataset was removed. 
 
 

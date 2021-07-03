@@ -1072,6 +1072,58 @@ plotdata2 &lt;- df.2016%&gt;%
   summarize(n = n())%&gt;% 
   mutate(pct = n/sum(n),
          lbl = scales::percent(pct))</code></pre>
+<pre class="r"><code>#Share 2014
+
+plotdata1 &lt;- df.2014%&gt;%
+  group_by(diagnose, fam_history_MI)%&gt;%
+  summarize(n = n())%&gt;% 
+  mutate(pct = n/sum(n),
+         lbl = scales::percent(pct))
+
+fig3&lt;-plotdata1%&gt;%
+  rename(`Family history`=fam_history_MI)%&gt;%
+  ggplot(aes(x=diagnose, y=pct, fill=`Family history`))+
+  geom_bar(stat = &quot;identity&quot;, position = &quot;fill&quot;)+
+  theme_minimal()+
+  theme(plot.title = element_text(color=&quot;black&quot;, size=12, 
+                                  face=&quot;bold&quot;, hjust = 0.5),
+        axis.ticks = element_blank(),
+        axis.title.x = element_text(color=&quot;black&quot;, size=12),
+        axis.title.y = element_text(color=&quot;black&quot;, size=12))+
+  scale_y_continuous(breaks = seq(0, 1, .2),label = percent)+
+  geom_text(aes(label = lbl), size = 4, 
+            position = position_stack(vjust = 0.5))+
+  geom_col(alpha = 0.2, width = 0.85) +
+  labs(title = &quot;Mental health well-being for respondents with \nfamily history of mental health disorders (2014)&quot;,
+       x=&quot;Mental health disorder&quot;,
+       y=&quot;Percent&quot;)
+
+#Share 2016
+plotdata2 &lt;- df.2016%&gt;%
+  group_by(diagnose, fam_history_MI)%&gt;%
+  filter(fam_history_MI!=&quot;I don&#39;t know&quot;)%&gt;%
+  summarize(n = n())%&gt;% 
+  mutate(pct = n/sum(n),
+         lbl = scales::percent(pct))
+
+fig4&lt;-plotdata2%&gt;%
+  rename(`Family history`=fam_history_MI)%&gt;%
+  filter(`Family history`!=&quot;I don&#39;t know&quot;)%&gt;%
+  ggplot(aes(x=diagnose, y=pct, fill=`Family history`))+
+  geom_bar(stat = &quot;identity&quot;, position = &quot;fill&quot;)+
+  theme_minimal()+
+  theme(plot.title = element_text(color=&quot;black&quot;, size=12, 
+                                  face=&quot;bold&quot;, hjust = 0.5),
+        axis.ticks = element_blank(),
+        axis.title.x = element_text(color=&quot;black&quot;, size=12),
+        axis.title.y = element_text(color=&quot;black&quot;, size=12))+
+  scale_y_continuous(breaks = seq(0, 1, .2),label = percent)+
+  geom_text(aes(label = lbl), size = 4, 
+            position = position_stack(vjust = 0.5))+
+  geom_col(alpha = 0.2, width = 0.85) +
+  labs(title = &quot;Mental health well-being for respondents with \nfamily history of mental health disorders (2016)&quot;,
+       x=&quot;Mental health disorder&quot;,
+       y=&quot;Percent&quot;)</code></pre>
 <p>It is clear that due to its poor sampling, the 2017 data set would be of very little value to us. Also the remote work variable has little to not relationship to the mental health of workers. Therefore the 2017 dataset was removed.</p>
 <p>As <em>location</em> was only significant in the 2016 dataset, it would be ill advised to combine the 2014 and 2016 datasets. The are to be analyzed separately. I decided to remain with the 2016 dataset as it has more observations.</p>
 </div>
